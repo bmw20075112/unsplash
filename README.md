@@ -1,19 +1,9 @@
 # unsplash
-
-## Project setup
+## 進度
 ```
-npm install
+搜尋結果拿到了
 ```
-
-### Compiles and hot-reloads for development
+## 目標
 ```
-npm run serve
+CSS:Flex+Masonry排版
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
