@@ -1,9 +1,9 @@
 # unsplash
 ## 進度
 ```
-搜尋結果拿到了
+CSS:Masonry pure css排版(多餘空間未解決)、RESET CSS載入
 ```
 ## 目標
 ```
-CSS:Flex+Masonry排版
+下滑偵測以無限載入API
 ```

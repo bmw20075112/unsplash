@@ -2,9 +2,7 @@
     <section>
         <ul class="pics-align">
             <li class="pic-wrapper" v-for="pic in pics" :key="pic.id">
-                <!-- <div :style="{background:}"></div> -->
                 <img :src="pic.urls.small" :alt="pic.alt_description">
-
                 <!-- <p>{{pic.description}}</p> -->
             </li>
         </ul>
@@ -33,15 +31,29 @@ export default {
 
 <style lang='scss'>
 .pics-align{
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin: 0 auto;
+    column-gap: 1rem;
+    margin:0 1rem;
 }
 .pic-wrapper{
-    height:250px;
+    display: inline-block;
+    margin-bottom:1rem;
+}
+
+@media only screen and (min-width:1024px){
+    .pics-align{
+        column-count: 4;
+    }
+}
+
+@media only screen and(max-width:1023px)and(min-width:768px){
+    .pics-align{
+        column-count: 3;
+    }
+}
+
+@media only screen and(max-width:767px)and(min-width:540px){
+    .pics-align{
+        column-count: 2;
+    }
 }
 </style>

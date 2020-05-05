@@ -8,7 +8,7 @@ export function searchPhotos(term,params){
             client_id:accessKeys.client_id,
             query:term,
             page:1,
-            per_page:10,
+            per_page:20,
             ...params
         }
     })
