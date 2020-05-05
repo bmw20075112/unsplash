@@ -32,26 +32,28 @@ export default {
 <style lang='scss'>
 .pics-align{
     column-gap: 1rem;
+    column-width: 100%;
     margin:0 1rem;
 }
 .pic-wrapper{
     display: inline-block;
     margin-bottom:1rem;
+
 }
 
-@media only screen and (min-width:1024px){
+@media only screen and (min-width:$large){
     .pics-align{
         column-count: 4;
     }
 }
 
-@media only screen and(max-width:1023px)and(min-width:768px){
+@media only screen and(max-width:$large - 1)and(min-width:$medium){
     .pics-align{
         column-count: 3;
     }
 }
 
-@media only screen and(max-width:767px)and(min-width:540px){
+@media only screen and(max-width:$medium - 1)and(min-width:$mobile){
     .pics-align{
         column-count: 2;
     }

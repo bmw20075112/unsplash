@@ -1,7 +1,7 @@
 # unsplash
 ## 進度
 ```
-CSS:Masonry pure css排版(多餘空間未解決)、RESET CSS載入
+CSS:Masonry pure css排版(多餘空間解決)、RESET CSS載入
 ```
 ## 目標
 ```
