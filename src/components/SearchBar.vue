@@ -17,9 +17,7 @@ export default {
     methods: {
         search(){
             if(this.term){
-                return searchPhotos(this.term,{
-                    orientation:'landscape'
-                })
+                return searchPhotos(this.term)
                 .then(data=>{
                     const pics=data.data.results;
                     console.log(data);

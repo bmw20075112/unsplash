@@ -1,6 +1,6 @@
 import axios from "axios";
 import accessKeys from './access-key';
-export function searchPhotos(term,params){
+export function searchPhotos(term,params={}){
     return axios({
         method:'get',
         url:'https://api.unsplash.com/search/photos/',
