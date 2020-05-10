@@ -1,0 +1,13 @@
+.author{
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+}
+.user-image{
+    border-radius: 100%;
+    display: inline-block;
+}
+.user-name{
+    display: inline-block;
+    margin-left: 0.5rem;
+}

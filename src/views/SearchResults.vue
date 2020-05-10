@@ -2,7 +2,7 @@
     <section>
         <ul class="pics-align">
             <li class="pic-wrapper" v-for="pic in pics" :key="pic.id">
-                <img class="pic" :src="pic.urls.small" :alt="pic.alt_description">
+                <img class="pic" :src="pic.urls.small" :alt="pic.alt_description" @click="toPhoto(pic)">
                 <div class="hover-info">
                     <div class="author">
                         <img class="user-image" :src="pic.user.profile_image.small"
@@ -11,9 +11,9 @@
                     </div>
 
                     <div class="options">
-                        <i class="fas fa-heart" :class="{'fas':true}"></i>
+                        <i class="fas fa-heart search-like"></i>
                     </div>
-                </div>
+                </div>            
             </li>
         </ul>
     </section>
@@ -28,6 +28,15 @@ export default {
         }
     },
 
+    methods: {
+        toPhoto(pic){
+            this.$store.dispatch('selectAction',pic)
+            .then(()=>{
+                this.$router.push({name:'Photo',params:{id:pic.id}});
+            })
+        }
+    },
+
     computed:{
         pics(){
             return this.$store.getters.pics;
@@ -36,41 +45,16 @@ export default {
         url(){
             return this.$store.getters.pics.urls;
         },
-
-        like(){
-            if(true){
-                return{
-                'fas':true
-                }
-            }
-            
-        }
     },
-
-    // created(){
-    //     db.collection('user').doc('hi').onSnapshot(snapshot=>{
-    //         snapshot.
-    //     })
-    // }
 }
 </script>
 
 <style lang='scss'>
+@import '../styles/user.css';
 .pics-align{
     column-gap: 1rem;
     column-width: 300px;
     margin:0 1rem;
-}
-
-.user-image{
-    border-radius: 100%;
-    display: inline-block;
-}
-
-.user-name{
-    display: inline-block;
-    margin-left: 0.5rem;
-    color: white;
 }
 
 .pic-wrapper{
@@ -98,18 +82,15 @@ export default {
     justify-content: space-between;
     align-items: flex-end;
 }
-
-.author{
-    display: flex;
-    align-items: center;
-    margin-left: 1rem;
+.user-name{
+    color: white;
 }
 
 .options{
     margin-right: 1rem;;
 }
 
-.fa-heart{
+.search-like{
     color: white;
     font-size: 1.6rem;
 }
