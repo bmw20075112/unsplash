@@ -7,12 +7,17 @@
                 <p class="user-name  black">{{pic.user.name}}</p>
             </div>
             <div class="pic-only_symbol_wrapper">
-                <i class="far  fa-arrow-alt-circle-down  pic-only_symbol"></i>
-                <i class="fas  fa-heart  pic-only_symbol"></i>
+                <button class="symbol-button mr">
+                   <i class="fas fa-download"></i>
+                </button>
+
+                <button class="symbol-button">
+                    <i class="fas  fa-heart"></i>
+                </button>
             </div>
         </header>
         
-        <figure class="pic-only_container">
+        <figure :class="[orient?containerL:containerP]">
             <img :class="[orient?landscape:portrait]"
             :src="pic.urls.regular" :alt="pic.alt_description">
         </figure>
@@ -27,8 +32,10 @@
 export default {
     data() {
         return {
-            portrait:'pic-only-image_portrait',
-            landscape:'pic-only-image_landscape'
+            portrait:'image_portrait',
+            landscape:'image_landscape',
+            containerL:'image-container_landscape',
+            containerP:'image-container_portrait'
         }
     },
     computed: {
@@ -44,60 +51,67 @@ export default {
 </script>
 
 <style lang='scss'>
-@import '../styles/user.css';
+@import '../styles/user.scss';
 .pic-only{
-    width: 100vw;
-    height: 80vh;
+    width: 80vw;
     margin: 0 auto;
-
-    &_container{
-        width: inherit;
-        background-color: silver;
-    }
-
-    &-image_landscape{
-        height:auto;
-    }
-
-    &-image_portrait{
-        max-height: 45rem;
-        
-    }
-
+    background-color: $first;
+    
     &_description{
         text-align: left;
-        margin: 1rem;
+        padding: 1rem;
     }
 
     &_header{
         display: flex;
-        margin-bottom: 0.5rem;
+        padding: 0.5rem;
         justify-content: space-between;
         align-items: center;
     }
+}
 
-    &_symbol_wrapper{
-        margin-right: 0.5rem;
+.image-container_portrait{
+    height: 80vh;
+}
+
+.image_landscape{
+    max-width:100%;
+}
+
+.image_portrait{
+    max-height: 100%;
+}
+
+.symbol-button{
+    background-color: white;
+    border: solid 2px #ccc;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+    
+    cursor: pointer;
+}
+
+@media only screen and (max-width:$medium){
+    .pic-only{
+        width: 100vw;
     }
 
-    &_symbol{
-        font-size: 2rem;
-        color: silver;
+    .user-image{
+        width: 1.5rem;
+    }
+
+    .image-container_portrait{
+        height: unset;
     }
 }
 
-// @media only screen and (max-width:$large){
-//     .pic-only{
-//         &_symbol{
-//             font-size: 2rem;
-//         }
-//     }
-    
-// }
-
-
 /* additional tools*/
-
+.mr{
+    margin-right: 2px;
+}
 .black{
     color:black;
 }

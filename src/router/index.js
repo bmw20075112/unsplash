@@ -12,14 +12,19 @@ const routes = [
     {
         path: '/search',
         name: 'Search',
-        component: () => import('@/views/SearchResults.vue')
+        component: () => import('@/views/SearchResults.vue'),
+        meta:{toModalView:true}
     },
 
     {
         path: '/photoModal/:id',
         name: 'PhotoModal',
         component: () => import('@/views/PhotoModal.vue'),
-        meta:{toModalView:true}
+        beforeEnter: (to, from, next) => {
+            if(from.matched.some(view=>view.meta.toModalView)){
+                next();
+            }
+        }
     },
 
     {

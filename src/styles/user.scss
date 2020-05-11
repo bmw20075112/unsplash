@@ -1,7 +1,11 @@
 .author{
     display: flex;
     align-items: center;
-    margin-left: 1rem;
+    cursor: pointer;
+}
+
+.author:hover .user-name{
+    color:$contrast;
 }
 .user-image{
     border-radius: 100%;
