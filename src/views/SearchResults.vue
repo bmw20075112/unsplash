@@ -1,5 +1,6 @@
 <template>
     <section>
+        <h1>{{width}}</h1>
         <ul class="pics-align">
             <li class="pic-wrapper" v-for="pic in pics" :key="pic.id">
                 <img class="pic" :src="pic.urls.small" :alt="pic.alt_description" @click="toPhoto(pic)">
@@ -16,6 +17,10 @@
                 </div>            
             </li>
         </ul>
+
+        <section class="modal" v-if="showModal" @click.stop.self="close">
+            <router-view class="modal-content"/>
+        </section>
     </section>
 </template>
 
@@ -24,7 +29,9 @@ import db from '../fetch/firebase';
 export default {
     data() {
         return {
-            likeList:{}
+            likeList:{},
+            width:0,
+            showModal:false
         }
     },
 
@@ -32,8 +39,21 @@ export default {
         toPhoto(pic){
             this.$store.dispatch('selectAction',pic)
             .then(()=>{
-                this.$router.push({name:'Photo',params:{id:pic.id}});
+                if(this.width<769){
+                    this.$router.push({name:'Photo',params:{id:pic.id}});
+                }else{
+                    this.showModal=true;
+                    this.$router.push({name:'PhotoModal',params:{id:pic.id}});
+                }
             })
+        },
+
+        close(){
+            this.$router.go(-1);
+        },
+
+        handleResize(){
+            this.width=window.innerWidth;
         }
     },
 
@@ -46,6 +66,23 @@ export default {
             return this.$store.getters.pics.urls;
         },
     },
+
+    watch: {
+        $route(){
+            if(this.$route.name==='Search'){
+                this.showModal=false;
+            }
+        }
+    },
+
+    created(){
+        window.addEventListener('resize',this.handleResize);
+        this.handleResize();
+    },
+
+    destroyed(){
+        window.removeEventListener('resize',this.handleResize);
+    }
 }
 </script>
 
@@ -98,6 +135,23 @@ export default {
 .ml{
     margin-left: 0.5rem;
 }
+
+//Modal Setting
+.modal{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba( 0, 0, 0, 0.5);
+    &-content{
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%,-25%);
+    }
+}
+
 // @media only screen and (min-width:$large){
 //     .pics-align{
 //         column-count: 4;

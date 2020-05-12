@@ -55,7 +55,7 @@ export default {
 .pic-only{
     width: 80vw;
     margin: 0 auto;
-    background-color: $first;
+    background-color: $background;
     
     &_description{
         text-align: left;

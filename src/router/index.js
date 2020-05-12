@@ -13,18 +13,21 @@ const routes = [
         path: '/search',
         name: 'Search',
         component: () => import('@/views/SearchResults.vue'),
-        meta:{toModalView:true}
-    },
-
-    {
-        path: '/photoModal/:id',
-        name: 'PhotoModal',
-        component: () => import('@/views/PhotoModal.vue'),
-        beforeEnter: (to, from, next) => {
-            if(from.matched.some(view=>view.meta.toModalView)){
-                next();
+        children:[
+            {
+                path: ':id',
+                name: 'PhotoModal',
+                component: () => import('@/views/PhotoModal.vue'),
+                meta:{
+                    showModal:true
+                }
+            },
+            {
+                path: 'about',
+                name: 'About',
+                component: () => import('@/views/About.vue'),
             }
-        }
+        ]
     },
 
     {
