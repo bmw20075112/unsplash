@@ -4,7 +4,7 @@
             <div class="author  pic-only_author">
                 <img class="user-image" :src="pic.user.profile_image.small"
                 alt="Author Name">
-                <p class="user-name  black">{{pic.user.name}}</p>
+                <p class="user-name black">{{pic.user.name}}</p>
             </div>
             <div class="pic-only_symbol_wrapper">
                 <button class="symbol-button mr">
@@ -53,7 +53,7 @@ export default {
 <style lang='scss'>
 @import '../styles/user.scss';
 .pic-only{
-    width: 80vw;
+    width: 90vw;
     margin: 0 auto;
     background-color: $background;
     border-radius: 1rem;

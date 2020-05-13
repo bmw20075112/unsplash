@@ -1,10 +1,15 @@
 <template>
     <section>
-        <h1>{{width}}</h1>
         <ul class="pics-align">
             <li class="pic-wrapper" v-for="pic in pics" :key="pic.id">
+                <div class="author ml author-mobile" v-if="width<=768">
+                    <img class="user-image" :src="pic.user.profile_image.small"
+                    alt="Author Name">
+                    <p class="user-name">{{pic.user.name}}</p>
+                </div>
+
                 <img class="pic" :src="pic.urls.small" :alt="pic.alt_description" @click="toPhoto(pic)">
-                <div class="hover-info">
+                <div class="hover-info" v-if="width>768">
                     <div class="author ml">
                         <img class="user-image" :src="pic.user.profile_image.small"
                         alt="Author Name">
@@ -31,7 +36,7 @@ export default {
         return {
             likeList:{},
             width:0,
-            showModal:false
+            showModal:false,
         }
     },
 
@@ -39,12 +44,9 @@ export default {
         toPhoto(pic){
             this.$store.dispatch('selectAction',pic)
             .then(()=>{
-                if(this.width<769){
-                    this.$router.push({name:'Photo',params:{id:pic.id}});
-                }else{
-                    this.showModal=true;
-                    this.$router.push({name:'PhotoModal',params:{id:pic.id}});
-                }
+                this.showModal=true;
+                document.body.classList.add('freeze-bg');
+                this.$router.push({name:'PhotoModal', params:{id:pic.id}});
             })
         },
 
@@ -67,21 +69,22 @@ export default {
         },
     },
 
-    watch: {
-        $route(){
-            if(this.$route.name==='Search'){
-                this.showModal=false;
-            }
-        }
-    },
-
     created(){
         window.addEventListener('resize',this.handleResize);
         this.handleResize();
     },
 
     destroyed(){
-        window.removeEventListener('resize',this.handleResize);
+       window.removeEventListener('resize',this.handleResize);
+    },
+
+    watch: {
+        $route(){
+            if(this.$route.name==='Search'){
+                document.body.classList.remove('freeze-bg');
+                this.showModal=false;
+            }
+        }
     }
 }
 </script>
@@ -97,6 +100,7 @@ export default {
 .pic-wrapper{
     position: relative;
     display: inline-block;
+
     margin-bottom:1rem;
     &:hover .hover-info{
         visibility: visible;
@@ -119,9 +123,6 @@ export default {
     justify-content: space-between;
     align-items: flex-end;
 }
-.user-name{
-    color: white;
-}
 
 .options{
     margin-right: 0.5rem;
@@ -136,6 +137,10 @@ export default {
     margin-left: 0.5rem;
 }
 
+.author-mobile{
+    margin-bottom: 0.5rem;
+}
+
 //Modal Setting
 .modal{
     width: 100%;
@@ -146,27 +151,56 @@ export default {
     background: rgba( 0, 0, 0, 0.5);
     &-content{
         position: absolute;
-        top: 25%;
         left: 50%;
-        transform: translate(-50%,-25%);
+        top: 75%;
+        transform: translate(-50%,-75%);
+        overflow: auto;
     }
 }
 
-// @media only screen and (min-width:$large){
-//     .pics-align{
-//         column-count: 4;
-//     }
-// }
+.freeze-bg{
+    overflow-y: hidden;
+}
 
-// @media only screen and(max-width:$large - 1)and(min-width:$medium){
-//     .pics-align{
-//         column-count: 3;
-//     }
-// }
+@media only screen and (max-width:$medium){
+    .pics-align{
+        column-gap: 0;
+        column-width: unset;
+        margin: unset;
+    }
 
-// @media only screen and(max-width:$medium - 1)and(min-width:$mobile){
-//     .pics-align{
-//         column-count: 2;
-//     }
-// }
+    .pic-wrapper{
+        width: 100%;
+        margin-bottom: 3rem;
+    }
+
+    .pic{
+        width: 100%;
+    }
+//
+    .pic-wrapper{
+        &:hover .hover-info{
+            visibility: hidden;
+        }
+        &:hover .pic{
+            filter: unset;
+        }
+    }
+
+    .hover-info{
+        visibility: visible;
+        position: absolute;
+        width: 100%;
+        top: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .modal-content{
+        top: 10%;
+        bottom: 0;
+        transform: translate(-50%,0);
+    }
+}
 </style>

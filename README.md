@@ -2,10 +2,11 @@
 ## 進度
 ```
 CSS: 
-1. Modal完成
+1. Modal背景鎖定
+2. Navbar製作中
 
 VUE:
-mobile目前是推到Photo的Router，需要再處理(background-color)
+選取單一圖片Router修正為只由PhotoModal進入
 ```
 
 ## 問題

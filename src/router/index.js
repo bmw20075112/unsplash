@@ -22,18 +22,19 @@ const routes = [
                     showModal:true
                 }
             },
-            {
-                path: 'about',
-                name: 'About',
-                component: () => import('@/views/About.vue'),
-            }
         ]
     },
 
     {
-        path: '/photo/:id',
-        name: 'Photo',
-        component: () => import('@/views/Photo.vue')
+        path:'/profile',
+        name:'Profile',
+        component:()=> import('@/views/Profile.vue')
+    },
+
+    {
+        path:'/cart',
+        name:'Cart',
+        component:()=> import('@/views/Cart.vue')
     }
 ]
 

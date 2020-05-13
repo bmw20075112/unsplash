@@ -1,7 +1,7 @@
 <template>
     <div>
-        <input type="text" v-model="term">
-        <button @click="search()">Search</button>
+        <input type="text" class="searchBar" v-model="term">
+        <i class="fas fa-search search-icon" @click="search()"></i>
     </div>
 </template>
 
@@ -23,6 +23,7 @@ export default {
                     console.log(data);
                     this.$store.dispatch('resultAction',pics);
                     this.term='';
+                    this.$router.push({name:'Search'});
                 })
                 .catch(error=>{
                     console.log(error);
@@ -34,5 +35,14 @@ export default {
 </script>
 
 <style>
+.searchBar{
+    width: 10rem;
+    height: 45px;
+    border-radius: 20%;
+    font-size: 1rem;
+}
 
+.search-icon{
+
+}
 </style>

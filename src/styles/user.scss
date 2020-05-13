@@ -14,4 +14,15 @@
 .user-name{
     display: inline-block;
     margin-left: 0.5rem;
+    color: white;
+}
+
+@media only screen and (max-width:$medium){
+    .author:hover .user-name{
+        color: unset;
+    }
+
+    .user-name{
+        color: black;
+    }
 }
