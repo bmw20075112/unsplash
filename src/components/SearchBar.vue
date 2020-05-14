@@ -23,7 +23,9 @@ export default {
                     console.log(data);
                     this.$store.dispatch('resultAction',pics);
                     this.term='';
-                    this.$router.push({name:'Search'});
+                    if(this.$route.name!=='SearchRes'){
+                        this.$router.push({name:'SearchRes'});
+                    }
                 })
                 .catch(error=>{
                     console.log(error);
@@ -34,15 +36,20 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss'>
 .searchBar{
     width: 10rem;
-    height: 45px;
-    border-radius: 20%;
+    height: $nav-height / 2;
     font-size: 1rem;
 }
 
 .search-icon{
+    font-size: 5rem;
+}
 
+@media only screen and(max-width: $medium){
+    .searchBar{
+        width: 5rem;
+    }
 }
 </style>

@@ -9,9 +9,16 @@ const routes = [
         name: 'Home',
         component:()=>import('@/views/Home.vue')
     },
+
     {
         path: '/search',
         name: 'Search',
+        component:()=>import('@/views/Search.vue')
+    },
+
+    {
+        path: '/searchRes',
+        name: 'SearchRes',
         component: () => import('@/views/SearchResults.vue'),
         children:[
             {

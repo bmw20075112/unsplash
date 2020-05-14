@@ -80,9 +80,11 @@ export default {
 
     watch: {
         $route(){
-            if(this.$route.name==='Search'){
+            if(this.$route.name==='SearchRes'){
                 document.body.classList.remove('freeze-bg');
                 this.showModal=false;
+            }else if(this.$route.name==='PhotoModal'){
+                this.showModal=true;
             }
         }
     }
@@ -198,7 +200,7 @@ export default {
     }
 
     .modal-content{
-        top: 10%;
+        top: 0;
         bottom: 0;
         transform: translate(-50%,0);
     }

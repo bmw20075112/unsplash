@@ -99,7 +99,8 @@ export default {
 @media only screen and (max-width:$medium){
     .pic-only{
         width: 100vw;
-        border-radius: 1rem 1rem 0 0;
+        border-radius: 0;
+        margin-top: 3rem;
     }
 
     .user-image{

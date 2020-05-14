@@ -24,6 +24,6 @@ export default {
 }
 
 .header-align{
-    margin-bottom: 1rem;
+    margin-bottom: 4rem;
 }
 </style>
