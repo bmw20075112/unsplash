@@ -13,3 +13,14 @@ export function searchPhotos(term,params={}){
         }
     })
 }
+
+export function getRandom(params={}){
+    return axios({
+        method:'get',
+        url:'https://api.unsplash.com/photos/random',
+        params:{
+            client_id:accessKeys.client_id,
+            count:30
+        }
+    })
+}

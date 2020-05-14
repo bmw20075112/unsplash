@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import db from '../fetch/firebase';
 export default {
     data() {
         return {

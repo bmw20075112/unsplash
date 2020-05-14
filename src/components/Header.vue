@@ -28,8 +28,10 @@ export default {
 
     methods: {
         goHome(){
-            if(this.$route.name!=='Home'){
-                this.$router.push({name:'Home'});
+            if(this.$route.name==='Home'){
+                this.$router.go();
+            }else{
+                this.$router.push({name:'Home'})
             }
         }
     },
@@ -85,5 +87,6 @@ export default {
         color:$background;
     }
     background-color: $second;
+    cursor: default;
 }
 </style>
