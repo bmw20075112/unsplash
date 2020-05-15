@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <input type="text" class="searchBar" v-model="term">
+    <div class="searchBar-wrapper">
+        <input type="text" class="searchBar" placeholder="e.g. cat" v-model="term" @keyup.enter="search()" >
         <i class="fas fa-search search-icon" @click="search()"></i>
     </div>
 </template>
@@ -37,19 +37,29 @@ export default {
 </script>
 
 <style lang='scss'>
+.searchBar-wrapper{
+    display: flex;
+    align-items: center;
+    height: 2rem;
+}
+
 .searchBar{
-    width: 10rem;
-    height: $nav-height / 2;
+    width: 8rem;
+    height: 100%;
     font-size: 1rem;
+    border: none;
+    padding: 0.3rem;
 }
 
 .search-icon{
-    font-size: 5rem;
-}
-
-@media only screen and(max-width: $medium){
-    .searchBar{
-        width: 5rem;
+    font-size: 1rem;
+    padding: 0.5rem;
+    color: $third;
+    background: $first;
+    height: 100%;
+    &:hover{
+        color: $first;
+        background-color: $third;
     }
 }
 </style>

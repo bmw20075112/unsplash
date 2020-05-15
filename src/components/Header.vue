@@ -58,7 +58,7 @@ export default {
     cursor: pointer;
     font-size: 2rem;
     font-style: italic;
-    margin-left: 0.5rem;
+    margin-left: 1rem;
     font-weight: bold;
     &:hover, &:focus{
         font-size: 2.1rem;
