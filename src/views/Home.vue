@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import db from '../fetch/firebase';
 import SearchBar from '@/components/SearchBar';
 import {getRandom} from '@/fetch/search.js';
 export default {
@@ -49,9 +50,9 @@ export default {
 
 .home-search{
     position: absolute;
-    left: 48.5%;
+    left: 48.7%;
     top: 50%;
-    transform: translate(-48.5%,-50%);
+    transform: translate(-48.7%,-50%);
 }
 
 @media only screen and(max-width: $medium){

@@ -16,8 +16,8 @@
                         <p class="user-name">{{pic.user.name}}</p>
                     </div>
 
-                    <div class="options">
-                        <i class="fas fa-heart search-like"></i>
+                    <div class="options" @click="likeToggle(pic.id)">
+                        <i class="fas fa-heart search-like" :class="{'like-click':likeList.findIndex(el=>el===pic.id)!==-1}"></i>
                     </div>
                 </div>            
             </li>
@@ -33,7 +33,7 @@
 export default {
     data() {
         return {
-            likeList:{},
+            likeList:[],
             width:0,
             showModal:false,
         }
@@ -51,6 +51,14 @@ export default {
 
         close(){
             this.$router.go(-1);
+        },
+
+        likeToggle(id){
+            if(this.likeList.findIndex(el=>el===id)===-1){
+                this.likeList.push(id);
+            }else{
+                this.likeList.splice(id,1);
+            }
         },
 
         handleResize(){
@@ -132,8 +140,15 @@ export default {
 .search-like{
     color: white;
     font-size: 1.6rem;
+    cursor: pointer;
+    // &:hover{
+    //     color: $contrast;
+    // }
 }
 
+.like-click{
+    color: $contrast;
+}
 .ml{
     margin-left: 0.5rem;
 }

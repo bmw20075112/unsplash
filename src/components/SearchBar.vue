@@ -44,7 +44,7 @@ export default {
 }
 
 .searchBar{
-    width: 8rem;
+    width: 15rem;
     height: 100%;
     font-size: 1rem;
     border: none;
@@ -52,14 +52,21 @@ export default {
 }
 
 .search-icon{
-    font-size: 1rem;
-    padding: 0.5rem;
-    color: $third;
-    background: $first;
     height: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: $first;
+    color: $third;
+    cursor: pointer;
     &:hover{
         color: $first;
         background-color: $third;
+    }
+}
+
+@media only screen and(max-width: $medium){
+    .searchBar{
+        width: 8rem;
     }
 }
 </style>
