@@ -30,10 +30,14 @@
 </template>
 
 <script>
+import firebase from 'firebase';
+import db from '../fetch/firebase';
 export default {
     data() {
         return {
             likeList:[],
+            uid:'',
+            docID:'',
             width:0,
             showModal:false,
         }
@@ -54,11 +58,22 @@ export default {
         },
 
         likeToggle(id){
-            if(this.likeList.findIndex(el=>el===id)===-1){
-                this.likeList.push(id);
+            if(firebase.auth().currentUser){
+                if(this.likeList.findIndex(el=>el===id)===-1){
+                    db.collection('users').doc(this.docID).update({
+                        likeList: firebase.firestore.FieldValue.arrayUnion(id)
+                    });
+                    this.likeList.push(id);
+                }else{
+                    db.collection('users').doc(this.docID).update({
+                        likeList: firebase.firestore.FieldValue.arrayRemove(id)
+                    });
+                    this.likeList.splice(id,1);
+                }
             }else{
-                this.likeList.splice(id,1);
+                this.$router.push({name:'Identity',query:{redirect:'/searchRes'}});
             }
+            
         },
 
         handleResize(){
@@ -77,6 +92,18 @@ export default {
     },
 
     created(){
+        firebase.auth().onAuthStateChanged(user=>{
+            if(user){
+                this.uid=user.uid;
+                db.collection('users').where("user_id",'==',user.uid).get()
+                .then(docs=>{
+                    docs.forEach(doc=>{
+                        this.likeList=doc.data().likeList;
+                        this.docID=doc.id;
+                    })
+                })
+            }
+        })
         window.addEventListener('resize',this.handleResize);
         this.handleResize();
     },
@@ -100,6 +127,7 @@ export default {
 
 <style lang='scss'>
 @import '../styles/user.scss';
+@import '../styles/modal.scss';
 .pics-align{
     column-gap: 1rem;
     column-width: 300px;
@@ -158,22 +186,6 @@ export default {
 }
 
 //Modal Setting
-.modal{
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: rgba( 0, 0, 0, 0.5);
-    &-content{
-        position: absolute;
-        left: 50%;
-        top: 75%;
-        transform: translate(-50%,-75%);
-        overflow: auto;
-    }
-}
-
 .freeze-bg{
     overflow-y: hidden;
 }
@@ -193,7 +205,7 @@ export default {
     .pic{
         width: 100%;
     }
-//
+
     .pic-wrapper{
         &:hover .hover-info{
             visibility: hidden;
@@ -201,16 +213,6 @@ export default {
         &:hover .pic{
             filter: unset;
         }
-    }
-
-    .hover-info{
-        visibility: visible;
-        position: absolute;
-        width: 100%;
-        top: 0.5rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
     }
 
     .modal-content{

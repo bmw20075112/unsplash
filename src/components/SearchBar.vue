@@ -44,7 +44,7 @@ export default {
 }
 
 .searchBar{
-    width: 15rem;
+    width: 12rem;
     height: 100%;
     font-size: 1rem;
     border: none;
@@ -64,7 +64,7 @@ export default {
     }
 }
 
-@media only screen and(max-width: $medium){
+@media only screen and(max-width: $large){
     .searchBar{
         width: 8rem;
     }

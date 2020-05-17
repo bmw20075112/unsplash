@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import firebase from 'firebase'
 
 Vue.use(VueRouter)
 
@@ -25,9 +26,6 @@ const routes = [
                 path: ':id',
                 name: 'PhotoModal',
                 component: () => import('@/views/PhotoModal.vue'),
-                meta:{
-                    showModal:true
-                }
             },
         ]
     },
@@ -35,7 +33,16 @@ const routes = [
     {
         path:'/profile',
         name:'Profile',
-        component:()=> import('@/views/Profile.vue')
+        component:()=> import('@/views/Profile.vue'),
+        meta:{
+            requiresAuth:true
+        }
+    },
+
+    {
+        path:'/identity',
+        name:'Identity',
+        component:()=> import('@/views/Identity.vue'),
     },
 
     {
@@ -49,6 +56,23 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
+})
+
+router.beforeEach((to,from,next)=>{
+	//check to see if route requires auth
+	if(to.matched.some(rec=>rec.meta.requiresAuth)){
+		firebase.auth().onAuthStateChanged(user=>{
+            if(user){
+                next();
+            }else{
+                // no user signed in, reject
+                next({name:'Identity'});
+            }
+        });
+		
+	}else{
+		next();
+	}
 })
 
 export default router
