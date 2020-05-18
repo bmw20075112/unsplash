@@ -8,16 +8,19 @@
                     <p class="user-name">{{pic.user.name}}</p>
                 </div>
 
-                <img class="pic" :src="pic.urls.small" :alt="pic.alt_description" @click="toPhoto(pic)">
+                <img class="pic" :src="pic.urls.small" :alt="pic.alt_description" 
+                @click="toPhoto(pic)">
+
                 <div class="hover-info" v-if="width>768">
-                    <div class="author ml">
+                    <div class="author ml" @click="toAuthor(pic.user.username)">
                         <img class="user-image" :src="pic.user.profile_image.small"
                         alt="Author Name">
                         <p class="user-name">{{pic.user.name}}</p>
                     </div>
-
+                    
                     <div class="options" @click="likeToggle(pic.id)">
-                        <i class="fas fa-heart search-like" :class="{'like-click':likeList.findIndex(el=>el===pic.id)!==-1}"></i>
+                        <i class="fas fa-heart search-like" 
+                        :class="{'like-click':likeList.findIndex(el=>el===pic.id)!==-1}"></i>
                     </div>
                 </div>            
             </li>
@@ -32,6 +35,7 @@
 <script>
 import firebase from 'firebase';
 import db from '../fetch/firebase';
+import {getAuthorList} from '@/fetch/search.js';
 export default {
     data() {
         return {
@@ -50,6 +54,17 @@ export default {
                 this.showModal=true;
                 document.body.classList.add('freeze-bg');
                 this.$router.push({name:'PhotoModal', params:{id:pic.id}});
+            })
+        },
+
+        toAuthor(username){
+            return getAuthorList(username,{
+                per_page: 20
+            })
+            .then(data=>{
+                console.log(data);
+                this.$store.dispatch('authorListAction', data.data);
+                this.$router.push({name:'Author'});
             })
         },
 

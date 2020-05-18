@@ -18,10 +18,9 @@ const routes = [
     },
 
     {
-        path: '/searchRes/:term',
+        path: '/searchRes',
         name: 'SearchRes',
         component: () => import('@/views/SearchResults.vue'),
-        props:true,
         children:[
             {
                 path: ':id',
@@ -29,6 +28,12 @@ const routes = [
                 component: () => import('@/views/PhotoModal.vue'),
             },
         ]
+    },
+
+    {
+        path:'/author',
+        name:'Author',
+        component:()=> import('@/views/Author.vue'),
     },
 
     {

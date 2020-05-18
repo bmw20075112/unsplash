@@ -24,3 +24,14 @@ export function getRandom(params={}){
         }
     })
 }
+
+export function getAuthorList(username,params={}){
+    return axios({
+        method:'get',
+        url:`https://api.unsplash.com/users/${username}/photos`,
+        params:{
+            client_id:accessKeys.client_id,
+            ...params
+        }
+    })
+}

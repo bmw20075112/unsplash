@@ -2,11 +2,10 @@
 ## 進度
 ```
 CSS: 
-- Identity PC排版完成 RWD未完成
+- 作者個人頁面排版中，FLEX應重新考慮
 
 VUE:
--  Firebase DB建立，AUTH認證完成
--  愛心偵測成功
+- 作者個人頁面資料串接完成，準備接照片
 ```
 
 ## 問題
@@ -17,8 +16,9 @@ VUE:
 ## 目標
 ```
 - 建立Profile頁面已顯示喜歡的照片
+- LOGOUT
+- Identity RWD
 - 下滑偵測以無限載入API
-- 作者個人頁面
 - Modal下滑載入其他類似照片
 - 左右切換照片
 - pagination

@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         pics:[],
+        authorList:[],
         selectPhoto:{}
     },
 
@@ -16,6 +17,10 @@ export default new Vuex.Store({
 
         selectPic(state){
             return state.selectPhoto;
+        },
+
+        authorList(state){
+            return state.authorList;
         },
 
         orientLandscape(state){
@@ -34,6 +39,10 @@ export default new Vuex.Store({
 
         selectMutate(state,payload){
             state.selectPhoto=payload;
+        },
+
+        authorListMutate(state,payload){
+            state.authorList=payload;
         }
     },
     actions: {
@@ -43,6 +52,10 @@ export default new Vuex.Store({
 
         selectAction({commit},payload){
             commit('selectMutate',payload);
+        },
+
+        authorListAction({commit},payload){
+            commit('authorListMutate',payload);
         }
     },
     modules: {

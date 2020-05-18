@@ -23,7 +23,7 @@ export default {
                     console.log(data);
                     this.$store.dispatch('resultAction',pics);
                     if(this.$route.name!=='SearchRes'){
-                        this.$router.push({name:'SearchRes',params:{term:this.term}});
+                        this.$router.push({name:'SearchRes'});
                     }
                     this.term='';
                 })
