@@ -18,9 +18,10 @@ const routes = [
     },
 
     {
-        path: '/searchRes',
+        path: '/searchRes/:term',
         name: 'SearchRes',
         component: () => import('@/views/SearchResults.vue'),
+        props:true,
         children:[
             {
                 path: ':id',

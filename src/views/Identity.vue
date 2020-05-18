@@ -141,7 +141,11 @@ export default {
 				firebase.auth().signInWithEmailAndPassword(this.login.email, this.login.pwd)
 				.then(cred=>{
                     // this.$router.push({name:'Gmap'});
-                    this.$router.push(decodeURI(this.$route.query.redirect) && '/');
+                    if(this.$route.query.redirect){
+                        this.$router.push(decodeURI(this.$route.query.redirect));
+                    }else{
+                        this.$router.push('/');
+                    }
                     console.log('ok');
 				})
 				.catch(err=>{

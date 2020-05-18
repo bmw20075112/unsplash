@@ -22,10 +22,10 @@ export default {
                     const pics=data.data.results;
                     console.log(data);
                     this.$store.dispatch('resultAction',pics);
-                    this.term='';
                     if(this.$route.name!=='SearchRes'){
-                        this.$router.push({name:'SearchRes'});
+                        this.$router.push({name:'SearchRes',params:{term:this.term}});
                     }
+                    this.term='';
                 })
                 .catch(error=>{
                     console.log(error);
