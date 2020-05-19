@@ -1,6 +1,7 @@
 <template>
     <div class="searchBar-wrapper">
-        <input type="text" class="searchBar" placeholder="e.g. cat" v-model="term" @keyup.enter="search()" >
+        <input type="text" autofocus class="searchBar" placeholder="e.g. cat" 
+        v-model="term" @keyup.enter="search()">
         <i class="fas fa-search search-icon" @click="search()"></i>
     </div>
 </template>
