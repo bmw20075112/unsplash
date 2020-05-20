@@ -4,10 +4,17 @@
             <img :src="authorInfo.profile_image.large" alt="author's profile image"
             class="author-profile-image">
             <div class="author-info">
-                <h1 class="author-name">{{authorInfo.name}}</h1>
-                <i class="fas fa-map-marker-alt location" v-if="authorInfo.location">
+                <div class="name-wrappe">
+                    <h1 class="author-name">{{authorInfo.name}}</h1>
+                </div>
+                
+
+                <div class="location-wrapper">
+                    <i class="fas fa-map-marker-alt location" v-if="authorInfo.location">
                         <span class="font-fix location-text">{{authorInfo.location}}</span>
                     </i>
+                </div>
+
                 <div class="icon-group">
                     <i class="fas fa-globe-americas social-link" v-if="authorInfo.portfolio_url">
                         <a :href="authorInfo.portfolio_url" target="_blank" class="social-link-text">
@@ -64,7 +71,7 @@ export default {
 <style lang='scss'>
 $social-size: 1.5rem;
 $social-size-medium: 1.2rem;
-$social-size-mobile: 1rem;
+$social-size-mobile: 0.8rem;
 .author-page-wrapper{
     min-width: $medium;
     display: flex;
@@ -81,7 +88,8 @@ $social-size-mobile: 1rem;
 .author-info{
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .author-profile-image{
@@ -91,8 +99,9 @@ $social-size-mobile: 1rem;
 
 .author-name{
     font-size: 3rem;
-    text-align: left;
+    text-align: center;
     font-weight: bold;
+    
 }
 
 
@@ -150,7 +159,7 @@ $social-size-mobile: 1rem;
 
 @media only screen and (max-width: $mobile){ 
     // .author-intro{
-    //     align-items: flex-start;
+    //     align-self: start;
     // }
 
     .author-info{
@@ -158,14 +167,19 @@ $social-size-mobile: 1rem;
     }
 
     .author-name{
-        font-size: 1.5rem;
+        font-size: 5vw;
+    }
+
+    .location, .social-link{
+        font-size: $social-size-mobile;
+        padding: 0 0.4rem;
     }
 
     .location{
         font-size: $social-size-mobile;
     }
-    // .social-link-text{
-    //     font-size: $social-size-mobile;
-    // }
+    .social-link-text{
+        font-size: $social-size-mobile;
+    }
 }
 </style>
