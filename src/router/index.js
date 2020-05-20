@@ -21,13 +21,6 @@ const routes = [
         path: '/searchRes',
         name: 'SearchRes',
         component: () => import('@/views/SearchResults.vue'),
-        children:[
-            {
-                path: ':id',
-                name: 'PhotoModal',
-                component: () => import('@/views/PhotoModal.vue'),
-            },
-        ]
     },
 
     {

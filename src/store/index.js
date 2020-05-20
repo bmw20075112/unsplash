@@ -5,12 +5,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        pics:[],
-        authorList:[],
-        selectPhoto:{}
+        showModal: false,
+        pics: [],
+        authorList: [],
+        selectPhoto: {}
     },
 
     getters:{
+        showModal(state){
+            return state.showModal;
+        },
+
         pics(state){
             return state.pics;
         },
@@ -33,6 +38,10 @@ export default new Vuex.Store({
     },
 
     mutations: {
+        showModalMutate(state,payload){
+            state.showModal=payload;
+        },
+
         resultMutate(state,payload){
             state.pics=payload;
         },
@@ -46,6 +55,10 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        showModalAction({commit}, payload){
+            commit('showModalMutate', payload);
+        },
+
         resultAction({commit},payload){
             commit('resultMutate',payload);
         },

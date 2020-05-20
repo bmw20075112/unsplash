@@ -25,10 +25,6 @@
                 </div>            
             </li>
         </ul>
-
-        <section class="modal" v-if="showModal" @click.stop.self="close">
-            <router-view class="modal-content"/>
-        </section>
     </section>
 </template>
 
@@ -39,11 +35,10 @@ import {getAuthorList} from '@/fetch/search.js';
 export default {
     data() {
         return {
-            likeList:[],
-            uid:'',
-            docID:'',
-            width:0,
-            showModal:false,
+            likeList: [],
+            uid: '',
+            docID: '',
+            width: 0,
         }
     },
 
@@ -51,9 +46,9 @@ export default {
         toPhoto(pic){
             this.$store.dispatch('selectAction',pic)
             .then(()=>{
-                this.showModal=true;
-                document.body.classList.add('freeze-bg');
-                this.$router.push({name:'PhotoModal', params:{id:pic.id}});
+                this.$store.dispatch('showModalAction', true);
+                history.pushState('', 'fuck', `photo/${pic.id}`);
+                // this.$router.push({name:'PhotoModal', params:{id:pic.id}});
             })
         },
 
@@ -66,10 +61,6 @@ export default {
                 this.$store.dispatch('authorListAction', data.data);
                 this.$router.push({name:'Author'});
             })
-        },
-
-        close(){
-            this.$router.go(-1);
         },
 
         likeToggle(id){
@@ -126,23 +117,10 @@ export default {
     destroyed(){
        window.removeEventListener('resize',this.handleResize);
     },
-
-    watch: {
-        $route(){
-            if(this.$route.name==='SearchRes'){
-                document.body.classList.remove('freeze-bg');
-                this.showModal=false;
-            }else if(this.$route.name==='PhotoModal'){
-                this.showModal=true;
-            }
-        }
-    }
 }
 </script>
 
 <style lang='scss'>
-@import '../styles/user.scss';
-@import '../styles/modal.scss';
 .pics-align{
     column-gap: 1rem;
     column-width: 300px;
@@ -200,11 +178,6 @@ export default {
     margin-bottom: 0.5rem;
 }
 
-//Modal Setting
-.freeze-bg{
-    overflow-y: hidden;
-}
-
 @media only screen and (max-width:$medium){
     .pics-align{
         column-gap: 0;
@@ -228,12 +201,6 @@ export default {
         &:hover .pic{
             filter: unset;
         }
-    }
-
-    .modal-content{
-        top: 0;
-        bottom: 0;
-        transform: translate(-50%,0);
     }
 }
 </style>

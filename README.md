@@ -2,7 +2,7 @@
 ## 進度
 ```
 CSS: 
-* 作者個人頁面上半完成
+* 
 
 VUE:
 * SearchRes準備打包成Component
@@ -10,6 +10,7 @@ VUE:
 
 ## 問題
 ```
+* 把Modal移到App.vue觸發
 * 作者姓名有兩個以上會跑版
 ```
 
