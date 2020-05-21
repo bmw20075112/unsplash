@@ -2,7 +2,7 @@
     <div id="app">
         <Header class="header-align" />
 
-        <router-view/>
+        <router-view />
 
         <section class="modal" v-if="showModal" @click.stop.self="close()">
             <PhotoModalTest class="modal-content"/>
@@ -54,11 +54,6 @@ export default {
 
 .header-align{
     margin-bottom: 4rem;
-}
-
-//Modal Setting
-.freeze{
-    overflow-y: hidden;
 }
 
 @media only screen and (max-width:$medium){

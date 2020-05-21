@@ -19,7 +19,7 @@
                     </div>
                     
                     <div class="options" @click="likeToggle(pic.id)">
-                        <i class="fas fa-heart search-like" 
+                        <i class="fas fa-heart search-like"
                         :class="{'like-click':likeList.findIndex(el=>el===pic.id)!==-1}"></i>
                     </div>
                 </div>            
@@ -47,8 +47,8 @@ export default {
             this.$store.dispatch('selectAction',pic)
             .then(()=>{
                 this.$store.dispatch('showModalAction', true);
-                history.pushState('', 'fuck', `photo/${pic.id}`);
-                // this.$router.push({name:'PhotoModal', params:{id:pic.id}});
+                // history.pushState('', 'fuck', `photo/${pic.id}`);
+                this.$router.push({name:'SearchRes', query:{id:pic.id}})
             })
         },
 
@@ -95,6 +95,10 @@ export default {
         url(){
             return this.$store.getters.pics.urls;
         },
+
+        showModal(){
+            return this.$store.getters.showModal;
+        }
     },
 
     created(){
@@ -116,6 +120,17 @@ export default {
 
     destroyed(){
        window.removeEventListener('resize',this.handleResize);
+    },
+
+    watch: {
+        $route(){
+            if(this.$route.query.id===undefined){
+                this.$store.dispatch('showModalAction', false);
+                document.body.classList.remove('freeze');
+            }else{
+                document.body.classList.add('freeze');
+            }
+        }
     },
 }
 </script>
@@ -176,6 +191,10 @@ export default {
 
 .author-mobile{
     margin-bottom: 0.5rem;
+}
+
+.freeze{
+    overflow-y: hidden;
 }
 
 @media only screen and (max-width:$medium){
