@@ -22,7 +22,8 @@
             :src="pic.urls.regular" :alt="pic.alt_description">
         </figure>
 
-        <p class="pic-only_description">{{pic.description || pic.alt_description}}</p>
+        <p class="pic-only_description">{{description}}</p>
+        
         
         <!-- <button>download</button> -->
     </section>
@@ -45,6 +46,14 @@ export default {
 
         orient(){
             return this.$store.getters.orientLandscape;
+        },
+
+        description(){
+            let des= (this.pic.description || this.pic.alt_description).split(' ');
+            if(des.length>30){
+                return des.slice(0,29).join(' ')+'......';
+            }
+            return des.join(' ');
         }
     },
 }
@@ -54,10 +63,11 @@ export default {
 @import '../styles/user.scss';
 .pic-only{
     width: 90vw;
+    height: 90%;
     margin: 0 auto;
     background-color: $background;
     border-radius: 1rem;
-    overflow: auto;
+    overflow-y: auto;
     
     &_description{
         text-align: left;
@@ -72,12 +82,18 @@ export default {
     }
 }
 
+.image-container_landscape{
+    height: 90%;
+}
+
 .image-container_portrait{
-    height: 80vh;
+    height: 90%;
 }
 
 .image_landscape{
-    max-width:100%;
+    width: 100%;
+    max-height: 100%;
+    padding: 0 1rem;
 }
 
 .image_portrait{
@@ -99,6 +115,7 @@ export default {
 @media only screen and (max-width:$medium){
     .pic-only{
         width: 100vw;
+        height: unset;
         border-radius: 0;
         margin-top: 3rem;
     }
@@ -108,6 +125,10 @@ export default {
     }
 
     .image-container_portrait{
+        height: unset;
+    }
+
+    .image-container_landscape{
         height: unset;
     }
 }

@@ -2,15 +2,15 @@
 ## 進度
 ```
 CSS: 
-* 
+* Modal 在Mdidium附近，直式照片會有多餘空白
 
 VUE:
-* SearchRes準備打包成Component
+* 用Vue Router的Query成功把Route留在SearchRes
+* Modal打包成Component中
 ```
 
 ## 問題
 ```
-* 把Modal移到App.vue觸發
 * 作者姓名有兩個以上會跑版
 ```
 
