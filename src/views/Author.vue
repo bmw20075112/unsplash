@@ -43,11 +43,20 @@
             <p class="bio">{{authorInfo.bio}}</p>
         </section>
 
+        <hr/>
+
+        <PhotoWall />
+
     </div>
 </template>
 
 <script>
+import PhotoWall from '@/components/PhotoWall.vue';
 export default {
+    components:{
+        PhotoWall
+    },
+
     computed: {
         authorList(){
             return this.$store.getters.authorList;

@@ -2,11 +2,11 @@
 ## 進度
 ```
 CSS: 
-* Modal 在Mdidium附近，直式照片會有多餘空白
+* 
 
 VUE:
-* 用Vue Router的Query成功把Route留在SearchRes
-* Modal打包成Component中
+* Author PAGE 載入Photo Wall
+* Modal、PhotoWall打包成Component
 ```
 
 ## 問題

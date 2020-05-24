@@ -5,17 +5,17 @@
         <router-view />
 
         <section class="modal" v-if="showModal" @click.stop.self="close()">
-            <PhotoModalTest class="modal-content"/>
+            <PhotoModal class="modal-content"/>
         </section>
     </div>
 </template>
 
 <script>
-import PhotoModalTest from '@/components/PhotoModalTest.vue'
+import PhotoModal from '@/components/PhotoModal.vue'
 import Header from '@/components/Header.vue'
 export default {
     components:{
-        PhotoModalTest,
+        PhotoModal,
         Header
     },
 
@@ -31,14 +31,6 @@ export default {
             return this.$store.getters.showModal;
         }
     },
-
-    // watch: {
-    //     showModal(){
-    //         if(this.$route.name==='SearchRes'){
-    //             this.$store.dispatch('showModalAction', false);
-    //         }
-    //     }
-    // }
 }
 </script>
 

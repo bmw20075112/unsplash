@@ -86,7 +86,7 @@ export default {
 }
 
 .modalPic-container{
-    max-height: 85%;
+    max-height: 90%;
     width: 100%;
     overflow: auto;
 }
@@ -101,13 +101,15 @@ export default {
 
 .symbol-button{
     background-color: white;
-    border: solid 2px #ccc;
+    border: none;
+    color: $second;
+    box-shadow: 0 1px 3px grey;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 1rem;
     padding: 0.25rem 0.5rem;
-    
+    margin-left: 0.5rem;
     cursor: pointer;
 }
 
@@ -127,7 +129,7 @@ export default {
         max-height: none;
     }
 
-    .pic-portrait{
+    .pic_portrait{
         max-height: none;
         width: 100%;
     }    
