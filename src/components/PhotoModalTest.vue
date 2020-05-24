@@ -17,14 +17,14 @@
             </div>
         </header>
         
-        <figure :class="[orient?containerL:containerP]">
+        <figure class="modalPic-container">
             <img :class="[orient?landscape:portrait]"
             :src="pic.urls.regular" :alt="pic.alt_description">
         </figure>
-
-        <p class="pic-only_description">{{description}}</p>
         
-        
+        <div class="des">
+            <p class="description">{{description}}</p>
+        </div>
         <!-- <button>download</button> -->
     </section>
 </template>
@@ -33,10 +33,8 @@
 export default {
     data() {
         return {
-            portrait:'image_portrait',
-            landscape:'image_landscape',
-            containerL:'image-container_landscape',
-            containerP:'image-container_portrait'
+            portrait:'pic_portrait',
+            landscape:'pic_landscape',
         }
     },
     computed: {
@@ -65,14 +63,11 @@ export default {
     width: 90vw;
     height: 90%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
     background-color: $background;
-    border-radius: 1rem;
+    border-radius: 1rem 1rem 0 0;
     overflow-y: auto;
-    
-    &_description{
-        text-align: left;
-        padding: 1rem;
-    }
 
     &_header{
         display: flex;
@@ -82,21 +77,25 @@ export default {
     }
 }
 
-.image-container_landscape{
-    height: 90%;
+.des{
+    flex-grow: 1;
+    & .description{
+        text-align: left;
+        padding: 0.5rem 1rem 0.5rem 1rem;
+    }
 }
 
-.image-container_portrait{
-    height: 90%;
-}
-
-.image_landscape{
+.modalPic-container{
+    max-height: 85%;
     width: 100%;
-    max-height: 100%;
-    padding: 0 1rem;
+    overflow: auto;
 }
 
-.image_portrait{
+.pic_landscape{
+    max-height: 100%;
+}
+
+.pic_portrait{
     max-height: 100%;
 }
 
@@ -124,13 +123,14 @@ export default {
         width: 1.5rem;
     }
 
-    .image-container_portrait{
-        height: unset;
+    .modalPic-container{
+        max-height: none;
     }
 
-    .image-container_landscape{
-        height: unset;
-    }
+    .pic-portrait{
+        max-height: none;
+        width: 100%;
+    }    
 }
 
 /* additional tools*/
