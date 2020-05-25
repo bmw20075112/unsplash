@@ -1,8 +1,10 @@
 <template>
     <div id="app">
-        <Header class="header-align" />
+        <Header :style="{marginBottom:headerAlign}" />
 
-        <router-view />
+        <keep-alive>
+            <router-view />
+        </keep-alive>
 
         <section class="modal" v-if="showModal" @click.stop.self="close()">
             <PhotoModal class="modal-content"/>
@@ -19,7 +21,17 @@ export default {
         Header
     },
 
+    data() {
+        return {
+            width: 0,
+        }
+    },
+
     methods: {
+        handleResize(){
+            this.width=window.innerWidth;
+        },
+
         close(){
             this.$router.go(-1);
             this.$store.dispatch('showModalAction', false);
@@ -29,8 +41,24 @@ export default {
     computed:{
         showModal(){
             return this.$store.getters.showModal;
+        },
+
+        headerAlign(){
+            if(this.width<=768 && this.$route.name!=='Author'){
+                return '50px';
+            }
+            return '4rem';
         }
     },
+
+    created(){
+        window.addEventListener('resize',this.handleResize);
+        this.handleResize();
+    },
+
+    destroyed(){
+       window.removeEventListener('resize',this.handleResize);
+    }
 }
 </script>
 
@@ -44,11 +72,11 @@ export default {
     color: #2c3e50;
 }
 
-.header-align{
-    margin-bottom: 4rem;
-}
 
 @media only screen and (max-width:$medium){
+    .header-align{
+        margin-bottom: $nav-height;
+    }
     .modal-content{
         top: 0;
         bottom: 0;

@@ -5,8 +5,7 @@ CSS:
 * 
 
 VUE:
-* Author PAGE 載入Photo Wall
-* Modal、PhotoWall打包成Component
+* VUE ROUTER 加入 scrollBehavior 避免在MOBILE上載入另一個PhotoWall時，沒有重置scroll height(Save position詳細功能待研究)
 ```
 
 ## 問題

@@ -4,25 +4,9 @@
             <img :src="authorInfo.profile_image.large" alt="author's profile image"
             class="author-profile-image">
             <div class="author-info">
-                <div class="name-wrappe">
-                    <h1 class="author-name">{{authorInfo.name}}</h1>
-                </div>
-                
-
-                <div class="location-wrapper">
-                    <i class="fas fa-map-marker-alt location" v-if="authorInfo.location">
-                        <span class="font-fix location-text">{{authorInfo.location}}</span>
-                    </i>
-                </div>
-
+                <h2 class="author-name">{{authorInfo.name}}</h2>
+            
                 <div class="icon-group">
-                    <i class="fas fa-globe-americas social-link" v-if="authorInfo.portfolio_url">
-                        <a :href="authorInfo.portfolio_url" target="_blank" class="social-link-text">
-                            <span class="font-fix">Site</span>
-                        </a>
-                    </i>
-                
-                
                     <i class="fab fa-instagram-square social-link" v-if="authorInfo.instagram_username">
                         <a :href="instagramUrl" target="_blank" class="social-link-text">
                             <span class="font-fix">IG</span>
@@ -35,11 +19,19 @@
                         </a>
                     </i>
                     
+                    <i class="fas fa-globe-americas social-link" v-if="authorInfo.portfolio_url">
+                        <a :href="authorInfo.portfolio_url" target="_blank" class="social-link-text">
+                            <span class="font-fix">Website</span>
+                        </a>
+                    </i>
                 </div>
             </div>
         </section>
 
         <section class="author-bio">
+            <i class="fas fa-map-marker-alt location" v-if="authorInfo.location">
+                <span class="font-fix location-text">{{authorInfo.location}}</span>
+            </i>
             <p class="bio">{{authorInfo.bio}}</p>
         </section>
 
@@ -79,19 +71,17 @@ export default {
 
 <style lang='scss'>
 $social-size: 1.5rem;
-$social-size-medium: 1.2rem;
-$social-size-mobile: 0.8rem;
+$social-size-mobile: 1.2rem;
 .author-page-wrapper{
-    min-width: $medium;
     display: flex;
     flex-direction: column;
-    align-items: center;
     margin: 0 auto;
 }
 
 .author-intro{
     display: flex;
     align-items: center;
+    align-self: center;
 }
 
 .author-info{
@@ -103,24 +93,19 @@ $social-size-mobile: 0.8rem;
 
 .author-profile-image{
     border-radius: 100%;
-    padding: 0 0.5rem;
+    padding: 0 1rem;
 }
 
 .author-name{
     font-size: 3rem;
+    line-height: 1.2;
     text-align: center;
     font-weight: bold;
-    
 }
 
-
-.location, .social-link{
+.social-link{
     font-size: $social-size;
-    padding: 0 0.5rem;
-}
-
-.location{
-    margin-bottom: 1rem;
+    padding: 1rem 0.5rem 0 0.5rem;
 }
 
 .location-text{
@@ -142,51 +127,55 @@ $social-size-mobile: 0.8rem;
     font-weight: 400;
 }
 
+.location{
+    margin: 1rem 0;
+}
+
+.author-bio{
+    padding: 1rem;
+    text-align: center;
+}
+
 .bio{
     max-width: $medium;
-    padding: 1rem;
-    text-align: left;
+    margin: 0 auto;
 }
 
 @media only screen and (max-width: $medium){
-    .author-page-wrapper{
-        min-width: unset;
-        width: 100vw;
-    }
-
     .author-name{
-        font-size: 2rem;
+        font-size: 7vw;
     }
 
-    .social-link, .location{
-        font-size: $social-size-medium;
-    }
-    .social-link-text{
-        font-size: $social-size-medium;
+    .author-bio{
+        text-align: left;
     }
 }
 
-@media only screen and (max-width: $mobile){ 
-    // .author-intro{
-    //     align-self: start;
-    // }
-
+@media only screen and (max-width: $mobile){
     .author-info{
-        align-items: center;
+        // align-items: center;
+        align-items: flex-start;
     }
 
     .author-name{
-        font-size: 5vw;
+        text-align: left;
     }
 
-    .location, .social-link{
-        font-size: $social-size-mobile;
-        padding: 0 0.4rem;
+    .icon-group{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
     }
 
-    .location{
+    .social-link{
         font-size: $social-size-mobile;
+        padding: 1rem 0.5rem 0 0;
     }
+
+    .location-text{
+        padding-left: 0.1rem;
+    }
+
     .social-link-text{
         font-size: $social-size-mobile;
     }

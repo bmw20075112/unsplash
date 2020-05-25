@@ -2,16 +2,16 @@
     <section>
         <ul class="pics-align">
             <li class="pic-wrapper" v-for="pic in pics" :key="pic.id">
-                <div class="author ml author-mobile" v-if="width<=768">
+                <!-- <div class="author ml author-mobile" v-if="width<=768">
                     <img class="user-image" :src="pic.user.profile_image.small"
                     alt="Author Name">
                     <p class="user-name">{{pic.user.name}}</p>
-                </div>
+                </div> -->
 
                 <img class="pic" :src="pic.urls.small" :alt="pic.alt_description" 
                 @click="toPhoto(pic)">
 
-                <div class="hover-info" v-if="width>768">
+                <div class="hover-info">
                     <div class="author ml" @click="toAuthor(pic.user.username)">
                         <img class="user-image" :src="pic.user.profile_image.small"
                         alt="Author Name">
@@ -38,7 +38,6 @@ export default {
             likeList: [],
             uid: '',
             docID: '',
-            width: 0,
             destination:''
         }
     },
@@ -81,10 +80,6 @@ export default {
             }
             
         },
-
-        handleResize(){
-            this.width=window.innerWidth;
-        }
     },
 
     computed:{
@@ -114,16 +109,10 @@ export default {
                 })
             }
         })
-        window.addEventListener('resize',this.handleResize);
-        this.handleResize();
     },
 
     mounted(){
         this.destination=this.$route.name;
-    },
-
-    destroyed(){
-       window.removeEventListener('resize',this.handleResize);
     },
 
     watch: {
@@ -169,7 +158,7 @@ export default {
     top: 0.5rem;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: flex-start;
 }
 
 .options{
@@ -178,7 +167,7 @@ export default {
 
 .search-like{
     color: white;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     cursor: pointer;
     // &:hover{
     //     color: $contrast;
@@ -209,7 +198,7 @@ export default {
 
     .pic-wrapper{
         width: 100%;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
     }
 
     .pic{
@@ -217,12 +206,25 @@ export default {
     }
 
     .pic-wrapper{
+        display: flex;
+        flex-direction: column;
+        & .hover-info{
+            visibility: visible;
+            position: unset;
+            top: unset;
+            margin-top: 0.3rem;
+        }
+
         &:hover .hover-info{
-            visibility: hidden;
+            visibility: visible;
         }
         &:hover .pic{
-            filter: unset;
+            filter: none;
         }
+    }
+
+    .search-like{
+        color: grey;
     }
 }
 </style>

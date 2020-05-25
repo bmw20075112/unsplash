@@ -86,7 +86,7 @@ export default {
 }
 
 .modalPic-container{
-    max-height: 90%;
+    // max-height: 90%;
     width: 100%;
     overflow: auto;
 }
