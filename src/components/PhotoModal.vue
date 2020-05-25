@@ -47,11 +47,15 @@ export default {
         },
 
         description(){
-            let des= (this.pic.description || this.pic.alt_description).split(' ');
-            if(des.length>30){
-                return des.slice(0,29).join(' ')+'......';
+            let des= this.pic.description || this.pic.alt_description;
+            if(!des){
+               return '';
             }
-            return des.join(' ');
+            let res= des.split(' ');
+            if(res.length>30){
+                return res.slice(0,29).join(' ')+'......';
+            }
+            return res.join(' ');
         }
     },
 }

@@ -35,7 +35,8 @@
             <p class="bio">{{authorInfo.bio}}</p>
         </section>
 
-        <hr/>
+        <h3 class="collection-name">{{authorInfo.first_name}}'s Photos</h3>
+        <hr class="cutLine">
 
         <PhotoWall />
 
@@ -132,13 +133,24 @@ $social-size-mobile: 1.2rem;
 }
 
 .author-bio{
-    padding: 1rem;
+    padding: 0.5rem 1rem 3rem 1rem;
     text-align: center;
 }
 
 .bio{
     max-width: $medium;
     margin: 0 auto;
+}
+
+.cutLine{
+    width: 95vw;
+    border: 1px dashed grey;
+}
+
+.collection-name{
+    font-weight: bold;
+    font-size: 2rem;
+    margin-bottom: -0.5rem;
 }
 
 @media only screen and (max-width: $medium){
@@ -170,14 +182,13 @@ $social-size-mobile: 1.2rem;
     .social-link{
         font-size: $social-size-mobile;
         padding: 1rem 0.5rem 0 0;
+        &-text{
+            font-size: $social-size-mobile;
+        }
     }
 
-    .location-text{
-        padding-left: 0.1rem;
-    }
-
-    .social-link-text{
-        font-size: $social-size-mobile;
+    .collection-name{
+        font-size: 6vw;
     }
 }
 </style>

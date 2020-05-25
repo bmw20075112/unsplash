@@ -2,12 +2,6 @@
     <section>
         <ul class="pics-align">
             <li class="pic-wrapper" v-for="pic in pics" :key="pic.id">
-                <!-- <div class="author ml author-mobile" v-if="width<=768">
-                    <img class="user-image" :src="pic.user.profile_image.small"
-                    alt="Author Name">
-                    <p class="user-name">{{pic.user.name}}</p>
-                </div> -->
-
                 <img class="pic" :src="pic.urls.small" :alt="pic.alt_description" 
                 @click="toPhoto(pic)">
 

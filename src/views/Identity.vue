@@ -1,6 +1,6 @@
 <template>
-    <div class="modal">
-		<section class="modal-content identity-wrapper" style="top:50%; transform:translate(-50%,-50%)">
+    <div class="">
+		<section class=" identity-wrapper">
 			<header class="identity-header">
 				<!-- 按鈕切換 -->
 				<button :class="[isTrue? use: die]" @click="isTrue=!isTrue"
@@ -58,8 +58,8 @@
 
             <small v-if='firebaseFeedback'>{{firebaseFeedback}}</small>
 
-            <button @click="current()">click</button>
-            <button @click="signout()">signout</button>
+            <!-- <button @click="current()">click</button>
+            <button @click="signout()">signout</button> -->
 
 			<footer class="identity-footer">
                 <button class="submit" 
@@ -198,12 +198,9 @@ export default {
 
 <style lang="scss">
 @import '../styles/modal.scss';
-$large-width: 30rem;
-$large-height: 40rem;
-
+$pc-width: 40vw;
 .identity-wrapper{ 
-    width: $large-width;
-    height: $large-height;
+    max-width: $pc-width;
     background-color: $first;
     display: flex;
     flex-direction: column;
@@ -213,7 +210,7 @@ $large-height: 40rem;
 .identity-body{
     display: flex;
     flex-grow: 1;
-    width: inherit;
+    width: 100%;
     align-items: center;
     background-color: $second;
     color: $background;
@@ -246,17 +243,15 @@ $large-height: 40rem;
 
 .identity-footer{
     height: 10%;
-    flex-grow: 0;
 }
 
 .identity-header{
     height: 10%;
     background-color: lightblue;
-    flex-grow: 0;
 }
 
 .btnUse, .btnDie{
-    width: $large-width / 2;
+    width: $pc-width / 2;
     background-color: $second;
     color: $background;
     border: none;
@@ -290,6 +285,21 @@ $large-height: 40rem;
     cursor: pointer;
     &:hover{
         font-size: 1.8rem;
+    }
+}
+
+@media only screen and (max-width: $medium){
+    .identity-wrapper{
+        max-width: none;
+        width: 100vw;
+        height: calc(100vh - 50px);
+    }
+
+    .btnUse, .btnDie{
+        width: 50vw;
+        height: 100%;
+        padding: 0.5rem;
+        font-size: 2rem;
     }
 }
 </style>

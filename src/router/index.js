@@ -43,12 +43,6 @@ const routes = [
         name:'Identity',
         component:()=> import('@/views/Identity.vue'),
     },
-
-    {
-        path:'/cart',
-        name:'Cart',
-        component:()=> import('@/views/Cart.vue')
-    }
 ]
 
 const router = new VueRouter({

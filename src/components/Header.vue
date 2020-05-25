@@ -7,10 +7,6 @@
                     <i class="fas fa-search nav-button"></i>
                 </router-link>
 
-                <router-link class="button-wrapper" :to="{name:'Cart'}">
-                    <i class="fas fa-shopping-cart nav-button"></i>
-                </router-link>
-
                 <router-link class="button-wrapper" :to="{name:'Profile'}">
                     <i class="fas fa-user nav-button"></i>
                 </router-link>
