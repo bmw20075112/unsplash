@@ -1,6 +1,7 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import firebase from 'firebase'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import firebase from 'firebase';
+import store from '@/store/index.js';
 
 Vue.use(VueRouter)
 
@@ -66,7 +67,7 @@ router.beforeEach((to,from,next)=>{
                 next();
             }else{
                 // no user signed in, reject
-                next({name:'Identity'});
+                store.dispatch('showAuthAction', true);
             }
         });
 		
