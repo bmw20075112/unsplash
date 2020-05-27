@@ -8,19 +8,22 @@
             
                 <div class="icon-group">
                     <i class="fab fa-instagram-square social-link" v-if="authorInfo.instagram_username">
-                        <a :href="instagramUrl" target="_blank" class="social-link-text">
+                        <a :href="instagramUrl" target="_blank" rel="noopener noreferrer"
+                        class="social-link-text">
                             <span class="font-fix">IG</span>
                         </a>
                     </i>
 
                     <i class="fab fa-twitter-square social-link" v-if="authorInfo.twitter_username">
-                        <a :href="twitterUrl" target="_blank" class="social-link-text">
+                        <a :href="twitterUrl" target="_blank" rel="noopener noreferrer"
+                        class="social-link-text">
                             <span class="font-fix">Twitter</span>
                         </a>
                     </i>
                     
                     <i class="fas fa-globe-americas social-link" v-if="authorInfo.portfolio_url">
-                        <a :href="authorInfo.portfolio_url" target="_blank" class="social-link-text">
+                        <a :href="authorInfo.portfolio_url" target="_blank" rel="noopener noreferrer"
+                        class="social-link-text">
                             <span class="font-fix">Website</span>
                         </a>
                     </i>

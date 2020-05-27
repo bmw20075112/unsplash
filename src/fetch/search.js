@@ -35,3 +35,14 @@ export function getAuthorList(username,params={}){
         }
     })
 }
+
+export function downloadPic(link, type='json'){
+    return axios({
+        method: 'get',
+        responseType: type,
+        url:`${link}`,
+        params:{
+            client_id:accessKeys.client_id,
+        }
+    })
+}

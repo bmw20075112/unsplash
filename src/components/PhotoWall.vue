@@ -70,8 +70,7 @@ export default {
                     this.likeList.splice(id,1);
                 }
             }else{
-                this.$store.dispatch('showAuthAction', true);
-                this.$router.push({name: this.destination, query:{auth:true}});
+                this.$router.push({name: 'Identity'});
             }
             
         },
@@ -118,7 +117,7 @@ export default {
             }else{
                 document.body.classList.add('freeze');
             }
-        },
+        }
     },
 }
 </script>

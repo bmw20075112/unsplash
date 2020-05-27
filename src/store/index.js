@@ -6,7 +6,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         showModal: false,
-        showAuth: false,
         pics: [],
         authorList: [],
         selectPhoto: {}
@@ -15,10 +14,6 @@ export default new Vuex.Store({
     getters:{
         showModal(state){
             return state.showModal;
-        },
-
-        showAuth(state){
-            return state.showAuth;
         },
 
         pics(state){
@@ -47,10 +42,6 @@ export default new Vuex.Store({
             state.showModal=payload;
         },
 
-        showAuthMutate(state,payload){
-            state.showAuth=payload;
-        },
-
         resultMutate(state,payload){
             state.pics=payload;
         },
@@ -66,10 +57,6 @@ export default new Vuex.Store({
     actions: {
         showModalAction({commit}, payload){
             commit('showModalMutate', payload);
-        },
-
-        showAuthAction({commit}, payload){
-            commit('showAuthMutate', payload);
         },
 
         resultAction({commit},payload){

@@ -1,14 +1,315 @@
 <template>
     <div class="">
-		<IdentityComp />
+		<section class=" identity-wrapper">
+			<header class="identity-header">
+				<!-- 按鈕切換 -->
+				<button :class="[isTrue? use: die]" @click="isTrue=!isTrue"
+				:disabled='isTrue'>Login</button>
+
+				<button :class="[!isTrue? use: die]" @click="isTrue=!isTrue"
+				:disabled='!isTrue'>Signup</button>
+			</header>
+
+			<main class="identity-body">
+                <!-- 登入表單 -->
+                <form class="pure-form pure-form-aligned form-align" v-if="isTrue" key="login">
+                    <fieldset>
+                        <div class="pure-control-group">
+                            <label for="aligned-email">Email</label>
+                            <input type="email" id="aligned-email" placeholder="Email" 
+                            v-model="login.email" autocomplete='username'/>
+                        </div>
+
+                        <div class="pure-control-group">
+                            <label for="aligned-password">Password</label>
+                            <input type="password" id="aligned-password" placeholder="Password" 
+                            v-model="login.pwd" autocomplete="current-password"/>
+                        </div>
+                    </fieldset>
+
+                    <!-- 警告 -->
+                    <span class="" v-if="loginFeedback">{{loginFeedback}}</span>
+                </form>
+
+                <!-- 註冊表單 -->
+                <form class="pure-form pure-form-aligned form-align" v-if="!isTrue" key="signup">
+                    <fieldset>
+                        <div class="pure-control-group">
+                            <label for="aligned-email2">Email</label>
+                            <input type="email" id="aligned-email2" placeholder="Each email register once"
+                            v-model="signup.email"/>
+                        </div>
+
+                        <div class="pure-control-group">
+                            <label for="aligned-name">User Name</label>
+                            <input type="text" id="aligned-name" placeholder="Jack" v-model.lazy="signup.userID"/>
+                            <!-- 帳號是否存在? -->
+                            <small><span class="warning" v-if="userFeedback">{{userFeedback}}</span></small>
+                        </div>
+
+                        <div class="pure-control-group">
+                            <label for="aligned-password2">Password</label>
+                            <input type="password" id="aligned-password2" placeholder="At least 6 charcode" 
+                            v-model="signup.pwd" autocomplete="off"/>
+                        </div>
+                        
+                        <div class="pure-control-group">
+                            <label for="pwd-check">Repeat Password</label>
+                            <input type="password" id="pwd-check" placeholder="Confirm your password" 
+                            v-model="signup.pwd2" autocomplete="off"/>
+                        </div>
+                    </fieldset>
+
+                    <!-- 密碼是否一致? -->
+                    <span class="" v-if="pwdCheck">{{pwdCheck}}</span>
+                    <!-- Firebase 回傳的問題 -->
+                    <span class="" v-if='firebaseFeedback'>{{firebaseFeedback}}</span>
+                </form>
+			</main>
+
+            <!-- <button @click="current()">click</button> -->
+            <!-- <button @click="signout()">signout</button> -->
+
+			<footer class="identity-footer">
+                <button class="submit-button"
+                v-if="isTrue" key="login"
+                @click="loginSend">Login</button>
+                <button class="submit-button" 
+                v-else key="signup"
+                @click="signupSend">Signup</button>
+            </footer>
+		</section>
     </div>
 </template>
 
 <script>
-import IdentityComp from '@/components/IdentityComp.vue'
+import db from '../fetch/firebase.js'
+import firebase from 'firebase';
 export default {
-	components:{
-        IdentityComp
-    }
+	data() {
+		return {
+			isTrue:true,
+			use:'btnUse',
+			die:'btnDie',
+			login:{
+				email:'',
+				pwd:''
+			},
+			signup:{
+				userID:'',
+				pwd:'',
+				pwd2:'',
+				email:''
+			},
+			feedback: null,
+			pwdFeedback: false,
+			userIDCheck: false,
+			userIDRes: null,
+            firebaseFeedback: null,
+            loginFeedback:null
+		}
+	},
+	methods: {
+		signupSend(){
+			if(this.userIDCheck && this.pwdFeedback && this.signup.email){
+				firebase.auth().createUserWithEmailAndPassword(this.signup.email,this.signup.pwd2)
+					.then(cred=>{
+						this.userIDChange.set({
+							userID: this.signup.userID,
+                            user_id: cred.user.uid,
+                            likeList:[]
+						})
+					})
+					.then(()=>{
+                        // this.$router.push(decodeURI(this.$route.query.redirect) || '/');
+                        this.$router.go(-1);
+                        console.log('ok');
+					})
+					.catch(err=>{
+						console.log(err);
+						this.firebaseFeedback=err.message;
+					});
+			}else{
+				alert('Make sure you fill every form correctly');
+			}
+        },
+
+        current(){
+            firebase.auth().onAuthStateChanged(user=>{
+                if(user){
+                    console.log(user);
+                }
+            });
+        },
+
+        signout(){
+            firebase.auth().signOut().then(()=>console.log('done'));
+        },
+        
+		loginSend(){
+			if(this.login.email && this.login.pwd){
+				firebase.auth().signInWithEmailAndPassword(this.login.email, this.login.pwd)
+				.then(cred=>{
+                    // if(this.$route.query.redirect){
+                    //     this.$router.push(decodeURI(this.$route.query.redirect));
+                    // }else{
+                    //     this.$router.push('/');
+                    // }
+                    this.$router.go(-1);
+                    console.log('ok');
+				})
+				.catch(err=>{
+					this.loginFeedback=err.message;
+				})
+				
+			}else{
+				this.loginFeedback='Email or Password is Wrong.';
+			}
+		}
+	},
+	computed: {
+		userFeedback(){
+			if(this.userIDChange){	
+				this.userIDChange.get().then(doc=>{
+					if(doc.exists){
+						this.feedback= 'This account is already created';
+						this.userIDCheck=false;
+					}else{
+						this.feedback=null;
+						this.userIDCheck=true;
+					}
+				});
+			}
+			return this.feedback;
+		},
+		userIDChange(){
+			if(this.signup.userID){
+				let convert=this.signup.userID.replace(/[$*_+~.()'"!\-:@^#{} ]/g,'-');
+				let res = convert.toLowerCase();
+				let ref= db.collection('users').doc(res);
+				return ref;
+			}
+		},
+		pwdCheck(){
+			if(this.signup.pwd && this.signup.pwd2){
+				if(this.signup.pwd===this.signup.pwd2){
+					this.pwdFeedback= true;
+				}else{
+					this.pwdFeedback= false;
+					return 'Check the difference in your password';
+				}
+				
+				return null;
+			}
+		}
+	},
 }
 </script>
+
+<style lang="scss">
+@import '../styles/form.css';
+@import '../styles/modal.scss';
+.identity-wrapper{ 
+    max-width: $mobile;
+    height: 100%;
+    background-color: $first;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.identity-body{
+    background-color: $second;
+    color: $background;
+    flex-grow: 1;
+}
+
+.identity-footer{
+    height: 10%;
+}
+
+.identity-header{
+    height: 10%;
+}
+
+.btnUse, .btnDie{
+    width: 50%;
+    background-color: $second;
+    color: $background;
+    border: none;
+    height: 100%;
+    padding: 0.5rem;
+    font-size: 2rem;
+    user-select: none;
+}
+
+.btnUse:focus,.btnDie:focus{
+    outline: none;
+}
+
+.btnUse{
+    border-top: 3px solid $contrast;
+}
+
+.btnDie{
+    background-color: darken($second, 10%);
+    border-top: 3px solid darken($second, 10%);
+    cursor: pointer;
+}
+
+.submit-button{
+    width: 100%;
+    height: 100%;
+    background-color: $contrast;
+    border: none;
+    color: $background;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 1rem;
+    outline: none;
+    cursor: pointer;
+    &:hover{
+        font-size: 1.8rem;
+    }
+}
+
+.form-align{
+    padding-top: 0.5rem;
+}
+
+.warning{
+    display: block;
+    margin: 1rem 0;
+}
+
+@media only screen and (max-width: $medium){
+    .identity-wrapper{
+        max-width: none;
+        width: 100vw;
+        height: calc(100vh - 50px);
+    }
+
+    .btnUse, .btnDie{
+        width: 50vw;
+        height: 100%;
+        padding: 0.5rem;
+        font-size: 2rem;
+    }
+
+    .pure-control-group input{
+        width: 96%;
+        margin: 0 2%;
+    }
+
+    .submit-button{
+        padding: unset;
+    }
+
+    .form-align{
+        padding-top: unset;
+    }
+}
+</style>

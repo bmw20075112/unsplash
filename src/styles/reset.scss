@@ -91,7 +91,6 @@
   */
  
  html {
-   box-sizing: border-box;
    background-color: $background;
  }
  
@@ -99,4 +98,8 @@
  *:before,
  *:after {
    box-sizing: inherit;
+ }
+
+ *{
+    box-sizing: border-box;
  }

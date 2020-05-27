@@ -53,6 +53,8 @@ const router = new VueRouter({
     scrollBehavior(to, from, savedPosition){
         if(savedPosition){
             return savedPosition;
+        }else if(to.query.auth===true){
+            return savedPosition;
         }else{
             return {x:0, y:0};
         }
@@ -67,7 +69,7 @@ router.beforeEach((to,from,next)=>{
                 next();
             }else{
                 // no user signed in, reject
-                store.dispatch('showAuthAction', true);
+                next({name:'Identity'})
             }
         });
 		

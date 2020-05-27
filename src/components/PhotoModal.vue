@@ -7,8 +7,8 @@
                 <p class="user-name black">{{pic.user.name}}</p>
             </div>
             <div class="pic-only_symbol_wrapper">
-                <button class="symbol-button mr">
-                   <i class="fas fa-download"></i>
+                <button class="symbol-button mr" @click="download(pic.links.download_location)">
+                    <i class="fas fa-download"></i>
                 </button>
 
                 <button class="symbol-button">
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import {downloadPic} from '@/fetch/search.js';
 export default {
     data() {
         return {
@@ -37,9 +38,32 @@ export default {
             landscape:'pic_landscape',
         }
     },
+
+    methods: {
+        download(downloadLink){
+            return downloadPic(downloadLink)
+            .then(res=>{
+                return downloadPic(res.data.url, 'blob')
+                .then(response=>{
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `${this.pic.id}.jpeg`);
+                    document.body.appendChild(link);
+                    link.click();
+                })
+            })
+            
+        }
+    },
+
     computed: {
         pic(){
             return this.$store.getters.selectPic;
+        },
+
+        downloadLink(){
+            return this.pic.links.download_location+`?client_id=${accessKeys.client_id}`;
         },
 
         orient(){
