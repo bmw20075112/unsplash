@@ -1,5 +1,6 @@
 <template>
     <section class="pic-only">
+        <div class="progress" :style="{width: progressPercent}"></div>
         <header class="pic-only_header">
             <div class="author  pic-only_author">
                 <img class="user-image" :src="pic.user.profile_image.small"
@@ -12,7 +13,7 @@
                 </button>
 
                 <button class="symbol-button">
-                    <i class="fas  fa-heart"></i>
+                    <i class="far  fa-heart"></i>
                 </button>
             </div>
         </header>
@@ -34,6 +35,7 @@ import {downloadPic} from '@/fetch/search.js';
 export default {
     data() {
         return {
+            progress: 0,
             portrait:'pic_portrait',
             landscape:'pic_landscape',
         }
@@ -41,17 +43,37 @@ export default {
 
     methods: {
         download(downloadLink){
+            let picID=this.pic.id;
             return downloadPic(downloadLink)
             .then(res=>{
-                return downloadPic(res.data.url, 'blob')
-                .then(response=>{
-                    const url = window.URL.createObjectURL(new Blob([response.data]));
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', `${this.pic.id}.jpeg`);
-                    document.body.appendChild(link);
-                    link.click();
+                let xhr=new XMLHttpRequest();
+                xhr.open('GET', res.data.url);
+                xhr.responseType='blob';
+                xhr.addEventListener('progress', evt=>{
+                    if(evt.lengthComputable){
+                        let percentComplete = (evt.loaded / evt.total).toFixed(2);
+                        this.progress=percentComplete;
+                    }
                 })
+
+                xhr.addEventListener('loadend', evt=>{
+                    this.progress=0;
+                })
+
+                xhr.onload=function(){
+                    if(xhr.status != 200){
+                        alert(`Error ${xhr.status}: ${xhr.statusText}`);
+                    }else{
+                        let response= xhr.response;
+                        const url = window.URL.createObjectURL(new Blob([response]));
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.setAttribute('download', `${picID}.jpeg`);
+                        document.body.appendChild(link);
+                        link.click();
+                    }
+                }
+                xhr.send();
             })
             
         }
@@ -64,6 +86,10 @@ export default {
 
         downloadLink(){
             return this.pic.links.download_location+`?client_id=${accessKeys.client_id}`;
+        },
+
+        progressPercent(){
+            return this.progress*100+'%';
         },
 
         orient(){
@@ -87,6 +113,11 @@ export default {
 
 <style lang='scss'>
 @import '../styles/user.scss';
+.progress{
+    position: absolute;
+    background-color: $contrast;
+    height: 5px;
+}
 .pic-only{
     width: 90vw;
     height: 90%;
@@ -130,7 +161,7 @@ export default {
 .symbol-button{
     background-color: white;
     border: none;
-    color: $second;
+    color: grey;
     box-shadow: 0 1px 3px grey;
     text-align: center;
     text-decoration: none;

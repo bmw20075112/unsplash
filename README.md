@@ -2,11 +2,11 @@
 ## 進度
 ```
 CSS: 
-* Identity RWD 完成
+* Add Download Progress bar
 
 VUE:
-* Identity確定在Route獨立
-* Download image功能新增
+* XHR Download progress detect
+* Add Logout
 ```
 
 ## 問題
@@ -18,11 +18,11 @@ VUE:
 ## 目標
 ```
 - [x] Identity RWD
-- [] LOGOUT
+- [x] LOGOUT
+- [x] Download progress
 - [] 建立Profile頁面已顯示喜歡的照片
 - [] 下滑偵測以無限載入API
 - [] Modal下滑載入其他類似照片
 - [] 左右切換照片
 - [] pagination
-- [] Download progress
 ```

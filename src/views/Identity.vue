@@ -67,9 +67,6 @@
                 </form>
 			</main>
 
-            <!-- <button @click="current()">click</button> -->
-            <!-- <button @click="signout()">signout</button> -->
-
 			<footer class="identity-footer">
                 <button class="submit-button"
                 v-if="isTrue" key="login"
@@ -115,9 +112,9 @@ export default {
 				firebase.auth().createUserWithEmailAndPassword(this.signup.email,this.signup.pwd2)
 					.then(cred=>{
 						this.userIDChange.set({
-							userID: this.signup.userID,
-                            user_id: cred.user.uid,
-                            likeList:[]
+							userName: this.signup.userID,
+                            userID: cred.user.uid,
+                            likeList: []
 						})
 					})
 					.then(()=>{
@@ -133,18 +130,6 @@ export default {
 				alert('Make sure you fill every form correctly');
 			}
         },
-
-        current(){
-            firebase.auth().onAuthStateChanged(user=>{
-                if(user){
-                    console.log(user);
-                }
-            });
-        },
-
-        signout(){
-            firebase.auth().signOut().then(()=>console.log('done'));
-        },
         
 		loginSend(){
 			if(this.login.email && this.login.pwd){
@@ -156,7 +141,14 @@ export default {
                     //     this.$router.push('/');
                     // }
                     this.$router.go(-1);
-                    console.log('ok');
+                    db.collection('users').where('userID', '==', cred.user.uid)
+                    .get().then(snapshots=>{
+                        snapshots.docs.forEach(snapshot=>{
+                            this.$store.dispatch('userAction', {type:'id', value: snapshot.data().userID});
+                            this.$store.dispatch('userAction', {type:'name', value: snapshot.id});
+                            this.$store.dispatch('likeListAction', snapshot.data().likeList);
+                        });
+                    });
 				})
 				.catch(err=>{
 					this.loginFeedback=err.message;
@@ -202,7 +194,7 @@ export default {
 				return null;
 			}
 		}
-	},
+    },
 }
 </script>
 

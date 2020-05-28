@@ -13,8 +13,9 @@
                     </div>
                     
                     <div class="options" @click="likeToggle(pic.id)">
-                        <i class="fas fa-heart search-like"
-                        :class="{'like-click':likeList.findIndex(el=>el===pic.id)!==-1}"></i>
+                        <i class="fa-heart like"
+                        :class="[likeList.findIndex(el=>el===pic.id)!==-1? fas: far]">
+                        </i>
                     </div>
                 </div>            
             </li>
@@ -29,10 +30,11 @@ import {getAuthorList} from '@/fetch/search.js';
 export default {
     data() {
         return {
-            likeList: [],
             uid: '',
             docID: '',
-            destination:''
+            destination:'',
+            fas:'fas',
+            far:'far'
         }
     },
 
@@ -59,15 +61,17 @@ export default {
         likeToggle(id){
             if(firebase.auth().currentUser){
                 if(this.likeList.findIndex(el=>el===id)===-1){
+                    this.$store.dispatch('likeListAction', {type:'push', value: id});
                     db.collection('users').doc(this.docID).update({
-                        likeList: firebase.firestore.FieldValue.arrayUnion(id)
-                    });
-                    this.likeList.push(id);
+                    likeList: firebase.firestore.FieldValue.arrayUnion(id)
+                });
+                    
+
                 }else{
+                    this.$store.dispatch('likeListAction', {type:'splice', value: id});
                     db.collection('users').doc(this.docID).update({
                         likeList: firebase.firestore.FieldValue.arrayRemove(id)
                     });
-                    this.likeList.splice(id,1);
                 }
             }else{
                 this.$router.push({name: 'Identity'});
@@ -87,6 +91,10 @@ export default {
 
         showModal(){
             return this.$store.getters.showModal;
+        },
+
+        likeList(){
+            return this.$store.getters.likeList;
         }
     },
 
@@ -94,10 +102,9 @@ export default {
         firebase.auth().onAuthStateChanged(user=>{
             if(user){
                 this.uid=user.uid;
-                db.collection('users').where("user_id",'==',user.uid).get()
+                db.collection('users').where("userID",'==', user.uid).get()
                 .then(docs=>{
                     docs.forEach(doc=>{
-                        this.likeList=doc.data().likeList;
                         this.docID=doc.id;
                     })
                 })
@@ -159,18 +166,6 @@ export default {
     margin-right: 0.5rem;
 }
 
-.search-like{
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    // &:hover{
-    //     color: $contrast;
-    // }
-}
-
-.like-click{
-    color: $contrast;
-}
 .ml{
     margin-left: 0.5rem;
 }
@@ -181,6 +176,12 @@ export default {
 
 .freeze{
     overflow-y: hidden;
+}
+
+.like{
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
 }
 
 @media only screen and (max-width:$medium){
