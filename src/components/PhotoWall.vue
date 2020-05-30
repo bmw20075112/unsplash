@@ -17,7 +17,7 @@
                         :class="[likeList.findIndex(el=>el===pic.id)!==-1? fas: far]">
                         </i>
                     </div>
-                </div>            
+                </div>
             </li>
         </ul>
     </section>
@@ -26,15 +26,14 @@
 <script>
 import firebase from 'firebase';
 import db from '../fetch/firebase';
+import common from '@/mixins/common.js'
 import {getAuthorList} from '@/fetch/search.js';
+import {mapGetters} from 'vuex'
 export default {
+    mixins: [common],
     data() {
         return {
-            uid: '',
-            docID: '',
             destination:'',
-            fas:'fas',
-            far:'far'
         }
     },
 
@@ -45,42 +44,14 @@ export default {
                 this.$store.dispatch('showModalAction', true);
                 this.$router.push({name: this.destination, query:{id: pic.id}})
             })
-        },
-
-        toAuthor(username){
-            return getAuthorList(username,{
-                per_page: 20
-            })
-            .then(data=>{
-                console.log(data);
-                this.$store.dispatch('authorListAction', data.data);
-                this.$router.push({name:'Author'});
-            })
-        },
-
-        likeToggle(id){
-            if(firebase.auth().currentUser){
-                if(this.likeList.findIndex(el=>el===id)===-1){
-                    this.$store.dispatch('likeListAction', {type:'push', value: id});
-                    db.collection('users').doc(this.docID).update({
-                    likeList: firebase.firestore.FieldValue.arrayUnion(id)
-                });
-                    
-
-                }else{
-                    this.$store.dispatch('likeListAction', {type:'splice', value: id});
-                    db.collection('users').doc(this.docID).update({
-                        likeList: firebase.firestore.FieldValue.arrayRemove(id)
-                    });
-                }
-            }else{
-                this.$router.push({name: 'Identity'});
-            }
-            
-        },
+        }
     },
 
     computed:{
+        ...mapGetters([
+            'showModal',
+        ]),
+
         pics(){
             if(this.$route.name==='Author'){
                 return this.$store.getters.authorList;
@@ -88,31 +59,21 @@ export default {
                 return this.$store.getters.pics;
             }
         },
-
-        showModal(){
-            return this.$store.getters.showModal;
-        },
-
-        likeList(){
-            return this.$store.getters.likeList;
-        }
     },
 
     created(){
         firebase.auth().onAuthStateChanged(user=>{
             if(user){
-                this.uid=user.uid;
                 db.collection('users').where("userID",'==', user.uid).get()
-                .then(docs=>{
-                    docs.forEach(doc=>{
-                        this.docID=doc.id;
+                .then(snapshots=>{
+                    snapshots.docs.forEach(snapshot=>{
+                        this.$store.dispatch('userAction', {type: 'id', value: snapshot.data().userID});
+                        this.$store.dispatch('userAction', {type: 'name', value: snapshot.id});
+                        this.$store.dispatch('likeListAction', snapshot.data().likeList);
                     })
                 })
             }
-        })
-    },
-
-    mounted(){
+        });
         this.destination=this.$route.name;
     },
 
@@ -122,6 +83,7 @@ export default {
                 this.$store.dispatch('showModalAction', false);
                 document.body.classList.remove('freeze');
             }else{
+                this.$store.dispatch('showModalAction', true);
                 document.body.classList.add('freeze');
             }
         }
@@ -218,8 +180,8 @@ export default {
         }
     }
 
-    .search-like{
-        color: grey;
+    .like{
+        color: $contrast;
     }
 }
 </style>

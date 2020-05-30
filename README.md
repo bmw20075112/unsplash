@@ -2,17 +2,18 @@
 ## 進度
 ```
 CSS: 
-* Add Download Progress bar
+* PhotoWall PhotoModal 愛心狀態統一
 
 VUE:
-* XHR Download progress detect
-* Add Logout
+* 修正愛心Splice BUG
+* 修正Router在Modal狀態下點首頁會亂跑
+* 新增Mixin以減少在PhotoWall、PhotoModal的重複代碼
+* 新增Author ROUTE Query
 ```
 
 ## 問題
 ```
 * 作者姓名有兩個以上會跑版
-* PhotoWall 愛心狀態不統一
 ```
 
 ## 目標

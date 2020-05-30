@@ -144,8 +144,8 @@ export default {
                     db.collection('users').where('userID', '==', cred.user.uid)
                     .get().then(snapshots=>{
                         snapshots.docs.forEach(snapshot=>{
-                            this.$store.dispatch('userAction', {type:'id', value: snapshot.data().userID});
-                            this.$store.dispatch('userAction', {type:'name', value: snapshot.id});
+                            this.$store.dispatch('userAction', {type: 'id', value: snapshot.data().userID});
+                            this.$store.dispatch('userAction', {type: 'name', value: snapshot.id});
                             this.$store.dispatch('likeListAction', snapshot.data().likeList);
                         });
                     });

@@ -81,10 +81,10 @@ export default new Vuex.Store({
         },
 
         userMutate(state, payload){
-            if(payload.type==='id'){
-                state.user.id = payload.value;
-            }else if(payload.type==='name'){
-                state.user.name = payload.value;
+            if(payload.type=='id'){
+                state.user.userID = payload.value;
+            }else if(payload.type=='name'){
+                state.user.userName = payload.value;
             }
         }
     },

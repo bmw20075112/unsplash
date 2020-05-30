@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <Header :style="{marginBottom:headerAlign}" />
+        <Header :style="{marginBottom: headerAlign}" />
 
         <keep-alive>
             <router-view />

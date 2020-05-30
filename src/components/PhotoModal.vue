@@ -5,15 +5,17 @@
             <div class="author  pic-only_author">
                 <img class="user-image" :src="pic.user.profile_image.small"
                 alt="Author Name">
-                <p class="user-name black">{{pic.user.name}}</p>
+                <p class="user-name black" @click="toAuthor(pic.user.username)">{{pic.user.name}}</p>
             </div>
             <div class="pic-only_symbol_wrapper">
                 <button class="symbol-button mr" @click="download(pic.links.download_location)">
                     <i class="fas fa-download"></i>
                 </button>
 
-                <button class="symbol-button">
-                    <i class="far  fa-heart"></i>
+                <button class="symbol-button" @click="likeToggle(pic.id)">
+                    <i class="fa-heart like-mobile"
+                        :class="[likeList.findIndex(el=>el===pic.id)!==-1? fas: far]">
+                    </i>
                 </button>
             </div>
         </header>
@@ -21,6 +23,11 @@
         <figure class="modalPic-container">
             <img :class="[orient?landscape:portrait]"
             :src="pic.urls.regular" :alt="pic.alt_description">
+            <figcaption class="reference">
+                Photo by <a target="_blank" rel="noopener noreferrer" :href='userLink'>{{pic.user.name}}</a> 
+                on <a target="_blank" rel="noopener noreferrer"
+                href="https://unsplash.com/?utm_source=Learning&utm_medium=referral">Unsplash</a>
+            </figcaption>
         </figure>
         
         <div class="des">
@@ -32,7 +39,9 @@
 
 <script>
 import {downloadPic} from '@/fetch/search.js';
+import common from '@/mixins/common.js'
 export default {
+    mixins: [common],
     data() {
         return {
             progress: 0,
@@ -106,6 +115,10 @@ export default {
                 return res.slice(0,29).join(' ')+'......';
             }
             return res.join(' ');
+        },
+
+        userLink(){
+            return `https://unsplash.com/@${this.pic.user.username}?utm_source=Learning&utm_medium=referral`
         }
     },
 }
@@ -151,11 +164,11 @@ export default {
 }
 
 .pic_landscape{
-    max-height: 100%;
+    max-height: 97%;
 }
 
 .pic_portrait{
-    max-height: 100%;
+    max-height: 97%;
 }
 
 .symbol-button{
@@ -170,6 +183,22 @@ export default {
     padding: 0.25rem 0.5rem;
     margin-left: 0.5rem;
     cursor: pointer;
+    &:focus{
+        outline: none;
+    }
+}
+
+.reference{
+    font-size: 0.8rem;
+    color: grey;
+    & a{
+        color: $contrast;
+    }
+}
+
+.like-mobile{
+    cursor: pointer;
+    color: $contrast;
 }
 
 @media only screen and (max-width:$medium){
@@ -191,7 +220,7 @@ export default {
     .pic_portrait{
         max-height: none;
         width: 100%;
-    }    
+    }
 }
 
 /* additional tools*/
