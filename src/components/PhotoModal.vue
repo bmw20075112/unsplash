@@ -215,6 +215,7 @@ export default {
 
     .modalPic-container{
         max-height: none;
+        overflow: unset;
     }
 
     .pic_portrait{
