@@ -34,8 +34,7 @@ export default {
 <style lang="scss">
 .home{
     max-width: 100vw;
-    height: 100vh;
-    margin-top: -1rem;
+    height: calc(100vh - 50px);
     background-size: cover;
     background-position: 47.5% center;
 }

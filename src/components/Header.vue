@@ -55,7 +55,7 @@ export default {
                     if(this.$route.name!=='SearchRes'){
                         this.$router.push({name:'SearchRes'});
                     }else if(this.$route.name=='SearchRes'){
-                        if(Object.entries(this.$route.query).length !== 0){
+                        if(!('id' in this.$route.query)){
                             this.$store.dispatch('showModalAction', false);
                         }
                     }
@@ -249,6 +249,13 @@ export default {
         font-size: 2rem;
         color: $background;
         user-select: none;
+    }
+
+    .router-link-exact-active{
+        & .nav-button{
+            color: unset;
+        }
+        background-color: unset;
     }
 }
 </style>

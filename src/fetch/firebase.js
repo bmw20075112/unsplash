@@ -2,13 +2,13 @@ import firebase from 'firebase';
 import firestore from 'firebase/firestore';
 
 let firebaseConfig = {
-    apiKey: "AIzaSyD-2utHSuH0KKUTthIbkU1WEDe5G0Dh4L4",
-    authDomain: "unsplash-28878.firebaseapp.com",
-    databaseURL: "https://unsplash-28878.firebaseio.com",
-    projectId: "unsplash-28878",
-    storageBucket: "unsplash-28878.appspot.com",
-    messagingSenderId: "95972940438",
-    appId: "1:95972940438:web:9de60bdf7c4572f5d440b7"
+    apiKey: "AIzaSyC5hkHdzti_enc7vUNNE9brhc-SjlGAoyw",
+    authDomain: "imager-6eae6.firebaseapp.com",
+    databaseURL: "https://imager-6eae6.firebaseio.com",
+    projectId: "imager-6eae6",
+    storageBucket: "imager-6eae6.appspot.com",
+    messagingSenderId: "366673901906",
+    appId: "1:366673901906:web:f3ef3329fee88443a0628b"
 };
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);

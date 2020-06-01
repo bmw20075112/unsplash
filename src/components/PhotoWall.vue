@@ -79,12 +79,12 @@ export default {
 
     watch: {
         $route(){
-            if(Object.entries(this.$route.query).length === 0){
-                this.$store.dispatch('showModalAction', false);
-                document.body.classList.remove('freeze');
-            }else{
+            if('id' in this.$route.query){
                 this.$store.dispatch('showModalAction', true);
                 document.body.classList.add('freeze');
+            }else{
+                this.$store.dispatch('showModalAction', false);
+                document.body.classList.remove('freeze');
             }
         }
     },

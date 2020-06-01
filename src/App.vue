@@ -29,7 +29,6 @@ export default {
             this.$router.go(-1);
             this.$store.dispatch('showModalAction', false);
         },
-
     },
 
     computed:{
@@ -39,6 +38,8 @@ export default {
 
         headerAlign(){
             if(this.windowWidth<=768 && this.$route.name!=='Author'){
+                return '50px';
+            }else if(this.$route.name==='Home'){
                 return '50px';
             }
             return '4rem';
