@@ -25,7 +25,7 @@
 
 <script>
 import firebase from 'firebase';
-import db from '../fetch/firebase';
+import {db} from '../fetch/firebase';
 import common from '@/mixins/common.js'
 import {getAuthorList} from '@/fetch/search.js';
 import {mapGetters} from 'vuex'
@@ -79,7 +79,7 @@ export default {
 
     watch: {
         $route(){
-            if(this.$route.query.id===undefined){
+            if(Object.entries(this.$route.query).length === 0){
                 this.$store.dispatch('showModalAction', false);
                 document.body.classList.remove('freeze');
             }else{

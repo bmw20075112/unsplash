@@ -1,7 +1,6 @@
 <template>
     <div id="app">
         <Header :style="{marginBottom: headerAlign}" />
-
         <keep-alive>
             <router-view />
         </keep-alive>
@@ -21,21 +20,16 @@ export default {
         Header,
     },
 
-    data() {
-        return {
-            width: 0,
-        }
-    },
-
     methods: {
         handleResize(){
-            this.width=window.innerWidth;
+            this.$store.dispatch('widthAction', window.innerWidth);
         },
 
         close(){
             this.$router.go(-1);
             this.$store.dispatch('showModalAction', false);
-        }
+        },
+
     },
 
     computed:{
@@ -44,10 +38,14 @@ export default {
         },
 
         headerAlign(){
-            if(this.width<=768 && this.$route.name!=='Author'){
+            if(this.windowWidth<=768 && this.$route.name!=='Author'){
                 return '50px';
             }
             return '4rem';
+        },
+
+        windowWidth(){
+            return this.$store.getters.windowWidth;
         }
     },
 

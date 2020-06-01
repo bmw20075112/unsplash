@@ -38,8 +38,9 @@
 </template>
 
 <script>
-import {downloadPic} from '@/fetch/search.js';
-import common from '@/mixins/common.js'
+import {blobDecode} from '@/fetch/search.js';
+import common from '@/mixins/common.js';
+import axios from "axios";
 export default {
     mixins: [common],
     data() {
@@ -53,36 +54,22 @@ export default {
     methods: {
         download(downloadLink){
             let picID=this.pic.id;
-            return downloadPic(downloadLink)
+            return blobDecode(downloadLink)
             .then(res=>{
-                let xhr=new XMLHttpRequest();
-                xhr.open('GET', res.data.url);
-                xhr.responseType='blob';
-                xhr.addEventListener('progress', evt=>{
-                    if(evt.lengthComputable){
-                        let percentComplete = (evt.loaded / evt.total).toFixed(2);
+                axios.get(res.data.url, {
+                    responseType: 'blob',
+                    onDownloadProgress: event=>{
+                        let percentComplete = Math.round((event.loaded / event.total)*100);
                         this.progress=percentComplete;
-                    }
+                    },
+                }).then(response =>{
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `${picID}.jpeg`);
+                    document.body.appendChild(link);
+                    link.click();
                 })
-
-                xhr.addEventListener('loadend', evt=>{
-                    this.progress=0;
-                })
-
-                xhr.onload=function(){
-                    if(xhr.status != 200){
-                        alert(`Error ${xhr.status}: ${xhr.statusText}`);
-                    }else{
-                        let response= xhr.response;
-                        const url = window.URL.createObjectURL(new Blob([response]));
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.setAttribute('download', `${picID}.jpeg`);
-                        document.body.appendChild(link);
-                        link.click();
-                    }
-                }
-                xhr.send();
             })
             
         }
@@ -98,7 +85,11 @@ export default {
         },
 
         progressPercent(){
-            return this.progress*100+'%';
+            if(this.progress!==100){
+                return this.progress+'%';
+            }else{
+                return 0;
+            }
         },
 
         orient(){

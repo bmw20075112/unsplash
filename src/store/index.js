@@ -10,7 +10,8 @@ export default new Vuex.Store({
         pics: [],
         user: {},
         selectPhoto: {},
-        showModal: false
+        showModal: false,
+        windowWidth: 0
     },
 
     getters:{
@@ -49,6 +50,10 @@ export default new Vuex.Store({
         showModal(state){
             return state.showModal;
         },
+
+        windowWidth(state){
+            return state.windowWidth;
+        }
     },
 
     mutations: {
@@ -86,6 +91,10 @@ export default new Vuex.Store({
             }else if(payload.type=='name'){
                 state.user.userName = payload.value;
             }
+        },
+
+        widthMutate(state, payload){
+            state.windowWidth=payload;
         }
     },
 
@@ -112,6 +121,10 @@ export default new Vuex.Store({
 
         userAction({commit}, payload){
             commit('userMutate', payload);
+        },
+
+        widthAction({commit}, payload){
+            commit('widthMutate', payload);
         }
     },
     modules: {

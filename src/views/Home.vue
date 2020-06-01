@@ -1,18 +1,11 @@
 <template>
-    <div class="home" :style='{backgroundImage:bgPath}'>
-        <!-- <button @click='random'>go</button> -->
-        <SearchBar class="home-search"/>
-    </div>
+    <div class="home" :style='{backgroundImage:bgPath}'></div>
 </template>
 
 <script>
-import db from '../fetch/firebase';
-import SearchBar from '@/components/SearchBar';
-import {getRandom} from '@/fetch/search.js';
+import {db} from '../fetch/firebase';
+
 export default {
-    components:{
-        SearchBar
-    },
     data() {
         return {
             cover:'@/assets/cover.jpg'
@@ -40,7 +33,6 @@ export default {
 
 <style lang="scss">
 .home{
-    position: relative;
     max-width: 100vw;
     height: 100vh;
     margin-top: -1rem;
@@ -48,14 +40,4 @@ export default {
     background-position: 47.5% center;
 }
 
-.home-search{
-    position: absolute;
-    left: 48.7%;
-    top: 50%;
-    transform: translate(-48.7%,-50%);
-}
-
-@media only screen and(max-width: $medium){
-    
-}
 </style>

@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import db from '../fetch/firebase.js'
+import {db} from '../fetch/firebase.js'
 import firebase from 'firebase';
 export default {
 	data() {

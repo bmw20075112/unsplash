@@ -36,7 +36,7 @@ export function getAuthorList(username,params={}){
     })
 }
 
-export function downloadPic(link){
+export function blobDecode(link){
     return axios({
         method: 'get',
         url:`${link}`,

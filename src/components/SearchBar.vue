@@ -65,9 +65,9 @@ export default {
     }
 }
 
-@media only screen and(max-width: $large){
+@media only screen and(max-width: $medium){
     .searchBar{
-        width: 8rem;
+        width: 50vw;
     }
 }
 </style>

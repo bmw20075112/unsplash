@@ -1,5 +1,5 @@
 import {mapGetters} from 'vuex';
-import db from '../fetch/firebase';
+import {db} from '../fetch/firebase';
 import firebase from 'firebase';
 import {getAuthorList} from '@/fetch/search.js'
 let common={
