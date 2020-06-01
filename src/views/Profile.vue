@@ -1,10 +1,12 @@
 <template>
     <section>
-        <!-- <button @click="current()">click</button> -->
-        <button @click="signout()">signout</button>
-        <input type="file" name="" id="" @change="onFileSelected">
-        <button @click="upload">upload</button>
-        <!-- <PhotoWall /> -->
+        <div class="profile">
+            <button @click="signout()">signout</button>
+            <input type="file" name="" id="" @change="onFileSelected">
+            <button @click="upload">upload</button>
+        </div>
+        
+        <PhotoWall />
     </section>
 </template>
 
@@ -39,14 +41,6 @@ export default {
                 console.log(res);
             })
         }
-
-        // current(){
-        //     firebase.auth().onAuthStateChanged(user=>{
-        //         if(user){
-        //             console.log(user);
-        //         }
-        //     });
-        // },
     },
 }
 </script>

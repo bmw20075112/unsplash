@@ -12,9 +12,9 @@
                     <i class="fas fa-download"></i>
                 </button>
 
-                <button class="symbol-button" @click="likeToggle(pic.id)">
+                <button class="symbol-button" @click="likeToggle(pic)">
                     <i class="fa-heart like-mobile"
-                        :class="[likeList.findIndex(el=>el===pic.id)!==-1? fas: far]">
+                        :class="[likeList.findIndex(el=>el.id===pic.id)!==-1? fas: far]">
                     </i>
                 </button>
             </div>
@@ -26,7 +26,7 @@
             <figcaption class="reference">
                 Photo by <a target="_blank" rel="noopener noreferrer" :href='userLink'>{{pic.user.name}}</a> 
                 on <a target="_blank" rel="noopener noreferrer"
-                href="https://unsplash.com/?utm_source=Learning&utm_medium=referral">Unsplash</a>
+                href="https://unsplash.com/?utm_source=Imager&utm_medium=referral">Unsplash</a>
             </figcaption>
         </figure>
         
@@ -109,7 +109,7 @@ export default {
         },
 
         userLink(){
-            return `https://unsplash.com/@${this.pic.user.username}?utm_source=Learning&utm_medium=referral`
+            return `https://unsplash.com/@${this.pic.user.username}?utm_source=Imager&utm_medium=referral`
         }
     },
 }

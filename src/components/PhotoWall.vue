@@ -12,9 +12,9 @@
                         <p class="user-name">{{pic.user.name}}</p>
                     </div>
                     
-                    <div class="options" @click="likeToggle(pic.id)">
+                    <div class="options" @click="likeToggle(pic)">
                         <i class="fa-heart like"
-                        :class="[likeList.findIndex(el=>el===pic.id)!==-1? fas: far]">
+                        :class="[likeList.findIndex(el=>el.id===pic.id)!==-1? fas: far]">
                         </i>
                     </div>
                 </div>
@@ -31,18 +31,13 @@ import {getAuthorList} from '@/fetch/search.js';
 import {mapGetters} from 'vuex'
 export default {
     mixins: [common],
-    data() {
-        return {
-            destination:'',
-        }
-    },
 
     methods: {
         toPhoto(pic){
             this.$store.dispatch('selectAction',pic)
             .then(()=>{
                 this.$store.dispatch('showModalAction', true);
-                this.$router.push({name: this.destination, query:{id: pic.id}})
+                this.$router.push({name: this.$route.name, query:{id: pic.id}})
             })
         }
     },
@@ -55,6 +50,8 @@ export default {
         pics(){
             if(this.$route.name==='Author'){
                 return this.$store.getters.authorList;
+            }else if(this.$route.name==='Profile'){
+                return this.$store.getters.likeList;
             }else{
                 return this.$store.getters.pics;
             }
@@ -74,7 +71,6 @@ export default {
                 })
             }
         });
-        this.destination=this.$route.name;
     },
 
     watch: {
@@ -100,6 +96,7 @@ export default {
 
 .pic-wrapper{
     position: relative;
+    width: 100%;
     display: inline-block;
     margin-bottom:1rem;
     &:hover .hover-info{
