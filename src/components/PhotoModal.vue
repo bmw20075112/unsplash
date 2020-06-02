@@ -5,7 +5,7 @@
             <div class="author  pic-only_author">
                 <img class="user-image" :src="pic.user.profile_image.small"
                 alt="Author Name">
-                <p class="user-name black" @click="toAuthor(pic.user.username)">{{pic.user.name}}</p>
+                <p class="user-name black" @click="toAuthor(pic.user.username)">{{nameLimit}}</p>
             </div>
             <div class="pic-only_symbol_wrapper">
                 <button class="symbol-button mr" @click="download(pic.links.download_location)">
@@ -24,7 +24,7 @@
             <img :class="[orient?landscape:portrait]"
             :src="pic.urls.regular" :alt="pic.alt_description">
             <figcaption class="reference">
-                Photo by <a target="_blank" rel="noopener noreferrer" :href='userLink'>{{pic.user.name}}</a> 
+                Photo by <a target="_blank" rel="noopener noreferrer" :href='userLink'>{{nameLimit}}</a> 
                 on <a target="_blank" rel="noopener noreferrer"
                 href="https://unsplash.com/?utm_source=Imager&utm_medium=referral">Unsplash</a>
             </figcaption>
@@ -76,26 +76,6 @@ export default {
     },
 
     computed: {
-        pic(){
-            return this.$store.getters.selectPic;
-        },
-
-        downloadLink(){
-            return this.pic.links.download_location+`?client_id=${accessKeys.client_id}`;
-        },
-
-        progressPercent(){
-            if(this.progress!==100){
-                return this.progress+'%';
-            }else{
-                return 0;
-            }
-        },
-
-        orient(){
-            return this.$store.getters.orientLandscape;
-        },
-
         description(){
             let des= this.pic.description || this.pic.alt_description;
             if(!des){
@@ -106,6 +86,45 @@ export default {
                 return res.slice(0,29).join(' ')+'......';
             }
             return res.join(' ');
+        },
+
+        downloadLink(){
+            return this.pic.links.download_location+`?client_id=${accessKeys.client_id}`;
+        },
+
+        nameLimit(){
+            if(this.windowWidth>768){
+                if(this.pic.user.name.length>30){
+                    return this.pic.user.first_name;
+                }
+                return this.pic.user.name;
+            }else if(this.windowWidth<=768 && this.windowWidth>480){
+                if(this.pic.user.name.length>25){
+                    return this.pic.user.first_name;
+                }
+                return this.pic.user.name;
+            }else{
+                if(this.pic.user.name.length>20){
+                    return this.pic.user.first_name;
+                }
+                return this.pic.user.name;
+            }
+        },
+
+        orient(){
+            return this.$store.getters.orientLandscape;
+        },
+
+        pic(){
+            return this.$store.getters.selectPic;
+        },
+
+        progressPercent(){
+            if(this.progress!==100){
+                return this.progress+'%';
+            }else{
+                return 0;
+            }
         },
 
         userLink(){

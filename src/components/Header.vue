@@ -18,9 +18,9 @@
                 </div>
 
 
-                <router-link class="button-wrapper" :to="{name:'Profile'}" @click="close">
+                <div class="button-wrapper" @click="close">
                     <span class="menu-text">Profile</span><i class="fas fa-user nav-button"></i>
-                </router-link>
+                </div>
             </ul>
         </nav>
     </header>
@@ -69,6 +69,9 @@ export default {
         },
 
         close(){
+            if(this.$route.name !== 'Profile'){
+                this.$router.push({name:'Profile'});
+            }
             this.isTrue=false;
         }
     },

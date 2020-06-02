@@ -8,7 +8,10 @@ export default new Vuex.Store({
         authorList: [],
         likeList: [],
         pics: [],
-        user: {},
+        user: {
+            userID:'',
+            userName:''
+        },
         selectPhoto: {},
         showModal: false,
         windowWidth: 0
@@ -90,6 +93,9 @@ export default new Vuex.Store({
                 state.user.userID = payload.value;
             }else if(payload.type=='name'){
                 state.user.userName = payload.value;
+            }else if(payload.type=='clear'){
+                state.user.userID='';
+                state.user.userName='';
             }
         },
 

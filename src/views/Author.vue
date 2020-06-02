@@ -41,7 +41,7 @@
         <h3 class="collection-name">{{authorInfo.first_name}}'s Photos</h3>
         <hr class="cutLine">
 
-        <PhotoWall />
+        <PhotoWall/>
 
     </div>
 </template>
@@ -77,6 +77,7 @@ export default {
 $social-size: 1.5rem;
 $social-size-mobile: 1.2rem;
 .author-page-wrapper{
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
@@ -146,7 +147,7 @@ $social-size-mobile: 1.2rem;
 }
 
 .cutLine{
-    width: 95vw;
+    width: 95%;
     border: 1px dashed grey;
 }
 
@@ -159,20 +160,10 @@ $social-size-mobile: 1.2rem;
 @media only screen and (max-width: $medium){
     .author-name{
         font-size: 7vw;
+        text-align: left;
     }
 
     .author-bio{
-        text-align: left;
-    }
-}
-
-@media only screen and (max-width: $mobile){
-    .author-info{
-        // align-items: center;
-        align-items: flex-start;
-    }
-
-    .author-name{
         text-align: left;
     }
 
@@ -181,6 +172,15 @@ $social-size-mobile: 1.2rem;
         flex-wrap: wrap;
         justify-content: flex-start;
     }
+
+    .author-info{
+        // align-items: center;
+        align-items: flex-start;
+    }
+}
+
+@media only screen and (max-width: $mobile){
+    
 
     .social-link{
         font-size: $social-size-mobile;

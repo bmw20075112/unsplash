@@ -1,7 +1,7 @@
 <template>
     <section>
         <ul class="pics-align">
-            <li class="pic-wrapper" v-for="pic in pics" :key="pic.id">
+            <li class="pic-wrapper" v-for="(pic, index) in pics" :key="pic.id">
                 <img class="pic" :src="pic.urls.small" :alt="pic.alt_description" 
                 @click="toPhoto(pic)">
 
@@ -9,7 +9,7 @@
                     <div class="author ml" @click="toAuthor(pic.user.username)">
                         <img class="user-image" :src="pic.user.profile_image.small"
                         alt="Author Name">
-                        <p class="user-name">{{pic.user.name}}</p>
+                        <p class="user-name">{{nameLimit[index]}}</p>
                     </div>
                     
                     <div class="options" @click="likeToggle(pic)">
@@ -46,6 +46,27 @@ export default {
         ...mapGetters([
             'showModal',
         ]),
+
+        nameLimit(){
+            return this.pics.map(pic=>{
+                if(this.windowWidth>768){
+                    if(pic.user.name.length>30){
+                        return pic.user.first_name;
+                    }
+                    return pic.user.name;
+                }else if(this.windowWidth<=768 && this.windowWidth>480){
+                    if(pic.user.name.length>25){
+                        return pic.user.first_name;
+                    }
+                    return pic.user.name;
+                }else{
+                    if(pic.user.name.length>20){
+                        return pic.user.first_name;
+                    }
+                    return pic.user.name;
+                }
+            });
+        },
 
         pics(){
             if(this.$route.name==='Author'){

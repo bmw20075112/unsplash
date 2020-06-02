@@ -74,9 +74,11 @@ let common={
 
     computed: {
         ...mapGetters([
+            'likeList',
+            'showModal',
             'userID',
             'userName',
-            'likeList'
+            'windowWidth'
         ]),
     },
 }

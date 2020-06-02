@@ -6,18 +6,20 @@ CSS:
 * PhotoWall PhotoModal 愛心狀態統一
 
 VUE:
-* [新增]串接資料回Profile Page
-* [修正]愛心點擊後，上傳完整資料至Firebase
-* [修正]愛心Splice BUG
-* [修正]Router在Modal狀態下點首頁會亂跑
-* [新增]Mixin以減少在PhotoWall、PhotoModal的重複代碼
-* [新增]Author ROUTE Query
+* [修正] 登入時，user資料未設定成功; 登出時未清空資料
+* [新增] 串接資料回Profile Page
+* [修正] 愛心點擊後，上傳完整資料至Firebase
+* [修正] 愛心Splice BUG
+* [修正] Router在Modal狀態下點首頁會亂跑
+* [新增] Mixin以減少在PhotoWall、PhotoModal的重複代碼
+* [新增] Author ROUTE Query
 ```
 
 ## 問題
 ```
-* Mansonry Layout務必調整成Horizontal
-* 作者姓名有兩個以上會跑版
+- [ ] Mansonry Layout務必調整成Horizontal
+- [ ] 在Profile，Splice之後的狀態處理
+- [x] 作者姓名有兩個以上會跑版
 ```
 
 ## 目標

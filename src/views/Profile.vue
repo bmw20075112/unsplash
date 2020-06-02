@@ -1,11 +1,12 @@
 <template>
     <section>
-        <div class="profile">
-            <button @click="signout()">signout</button>
+        <i class="fas fa-user nav-button"></i>
+        <!-- <div class="profile">
+            
             <input type="file" name="" id="" @change="onFileSelected">
             <button @click="upload">upload</button>
-        </div>
-        
+        </div> -->
+        <button @click="signout()">signout</button>
         <PhotoWall />
     </section>
 </template>
@@ -27,7 +28,11 @@ export default {
 
     methods: {
         signout(){
-            firebase.auth().signOut().then(()=>console.log('done'));
+            firebase.auth().signOut().then(()=>{
+                this.$store.dispatch('userAction', {type: 'clear'});
+                this.$store.dispatch('likeListAction', {type: 'clear'});
+                this.$router.push({name: 'Home'});
+            });
         },
 
         onFileSelected(e){
