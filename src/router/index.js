@@ -68,7 +68,6 @@ router.beforeEach((to,from,next)=>{
             if(user){
                 next();
             }else{
-                console.log('user form router');
                 // no user signed in, reject
                 next({name:'Identity'})
             }

@@ -6,6 +6,7 @@ CSS:
 * PhotoWall PhotoModal 愛心狀態統一
 
 VUE:
+* [新增] 左右切換照片
 * [修正] 登入時，user資料未設定成功; 登出時未清空資料
 * [新增] 串接資料回Profile Page
 * [修正] 愛心點擊後，上傳完整資料至Firebase
@@ -17,6 +18,8 @@ VUE:
 
 ## 問題
 ```
+- [ ] 左右切換照片的極限值未設定
+- [ ] 左右切換照片的Route問題(上一頁)
 - [ ] Mansonry Layout務必調整成Horizontal
 - [ ] 在Profile，Splice之後的狀態處理
 - [x] 作者姓名有兩個以上會跑版
@@ -28,8 +31,8 @@ VUE:
 - [x] LOGOUT
 - [x] Download progress
 - [x] 建立Profile頁面已顯示喜歡的照片
+- [x] 左右切換照片
 - [] 下滑偵測以無限載入API
 - [] Modal下滑載入其他類似照片
-- [] 左右切換照片
 - [] pagination
 ```

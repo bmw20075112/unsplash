@@ -17,3 +17,23 @@
         }
     }
 }
+
+.toLast, .toNext{
+    position: absolute;
+    top: 50%;
+    font-size: 2rem;
+    color: rgba(243, 243, 243, 0.5);
+    z-index: 100;
+    cursor: pointer;
+    &:hover{
+        color: $background;
+    }
+}
+
+.toLast{
+    left: 0.3rem;
+}
+
+.toNext{
+    right: 0.3rem;
+}

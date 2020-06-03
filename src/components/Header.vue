@@ -17,7 +17,6 @@
                     <i class="fas fa-search search-button" @click="search()"></i>                 
                 </div>
 
-
                 <div class="button-wrapper" @click="close">
                     <span class="menu-text">Profile</span><i class="fas fa-user nav-button"></i>
                 </div>

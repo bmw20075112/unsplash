@@ -1,6 +1,7 @@
 <template>
     <section class="pic-only">
         <div class="progress" :style="{width: progressPercent}"></div>
+        
         <header class="pic-only_header">
             <div class="author  pic-only_author">
                 <img class="user-image" :src="pic.user.profile_image.small"
@@ -33,7 +34,6 @@
         <div class="des">
             <p class="description">{{description}}</p>
         </div>
-        <!-- <button>download</button> -->
     </section>
 </template>
 

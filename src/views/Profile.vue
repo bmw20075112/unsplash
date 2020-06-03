@@ -1,13 +1,16 @@
 <template>
     <section>
-        <i class="fas fa-user nav-button"></i>
+        <div class="profile-image">
+            <img src="" alt="">
+        </div>
+        <i class="fas fa-user profile"></i>
         <!-- <div class="profile">
             
             <input type="file" name="" id="" @change="onFileSelected">
             <button @click="upload">upload</button>
         </div> -->
         <button @click="signout()">signout</button>
-        <PhotoWall />
+        <PhotoWall class="profile-wall"/>
     </section>
 </template>
 
@@ -50,6 +53,15 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang='scss'>
+.profile-wall{
+    max-width: 1200px;
+}
+.profile{
+    color: $second;
+    font-size: 3rem;
+    padding: 1rem;
+    border-radius: 100%;
+    border: 5px solid $second;
+}
 </style>

@@ -3,7 +3,7 @@
         <ul class="pics-align">
             <li class="pic-wrapper" v-for="(pic, index) in pics" :key="pic.id">
                 <img class="pic" :src="pic.urls.small" :alt="pic.alt_description" 
-                @click="toPhoto(pic)">
+                @click="toPhoto(pic, index)">
 
                 <div class="hover-info">
                     <div class="author ml" @click="toAuthor(pic.user.username)">
