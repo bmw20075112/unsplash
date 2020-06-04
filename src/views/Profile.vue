@@ -1,16 +1,21 @@
 <template>
-    <section>
-        <div class="profile-image">
-            <img src="" alt="">
-        </div>
-        <i class="fas fa-user profile"></i>
+    <section class="profile-page">
         <!-- <div class="profile">
             
             <input type="file" name="" id="" @change="onFileSelected">
             <button @click="upload">upload</button>
         </div> -->
-        <button @click="signout()">signout</button>
-        <PhotoWall class="profile-wall"/>
+        <div class="profile-wrapper">
+            <div class="">
+                <i class="fas fa-user profile"></i>
+            </div>
+            
+            <div class="">
+                <h2>{{$store.getters.userName}}</h2>
+                <button @click="signout()">signout</button>
+            </div>
+        </div>
+        <PhotoWall/>
     </section>
 </template>
 
@@ -34,8 +39,10 @@ export default {
             firebase.auth().signOut().then(()=>{
                 this.$store.dispatch('userAction', {type: 'clear'});
                 this.$store.dispatch('likeListAction', {type: 'clear'});
+            }).then(()=>{
                 this.$router.push({name: 'Home'});
-            });
+            })
+
         },
 
         onFileSelected(e){
@@ -54,8 +61,12 @@ export default {
 </script>
 
 <style lang='scss'>
-.profile-wall{
+.profile-page{
     max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .profile{
     color: $second;
@@ -63,5 +74,11 @@ export default {
     padding: 1rem;
     border-radius: 100%;
     border: 5px solid $second;
+}
+
+.profile-wrapper{
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
 }
 </style>

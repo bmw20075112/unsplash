@@ -1,6 +1,7 @@
 <template>
     <section>
-        <ul class="pics-align">
+        <h1 v-if="pics.length===0">{{noPics}}</h1>
+        <ul class="pics-align" v-else>
             <li class="pic-wrapper" v-for="(pic, index) in pics" :key="pic.id">
                 <img class="pic" :src="pic.urls.small" :alt="pic.alt_description" 
                 @click="toPhoto(pic, index)">
@@ -31,6 +32,12 @@ import {getAuthorList} from '@/fetch/search.js';
 import {mapGetters} from 'vuex'
 export default {
     mixins: [common],
+
+    data() {
+        return {
+            noPics:''
+        }
+    },
 
     methods: {
         toPhoto(pic){
@@ -72,8 +79,10 @@ export default {
             if(this.$route.name==='Author'){
                 return this.$store.getters.authorList;
             }else if(this.$route.name==='Profile'){
+                this.noPics='You haven\'t added any image into your collection';
                 return this.$store.getters.likeList;
             }else{
+                this.noPics='Sorry, there is no image correspond to what you searched.'
                 return this.$store.getters.pics;
             }
         },

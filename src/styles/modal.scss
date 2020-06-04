@@ -19,11 +19,8 @@
 }
 
 .toLast, .toNext{
-    position: absolute;
-    top: 50%;
-    font-size: 2rem;
+    font-size: 3rem;
     color: rgba(243, 243, 243, 0.5);
-    z-index: 100;
     cursor: pointer;
     &:hover{
         color: $background;
@@ -31,9 +28,34 @@
 }
 
 .toLast{
-    left: 0.3rem;
+    left: 0;
 }
 
 .toNext{
-    right: 0.3rem;
+    right: 0;
+}
+
+.disabled{
+    pointer-events: none;
+    cursor: default;
+    color: rgba(243, 243, 243, 0);
+}
+
+.detectArea{
+    background-color: unset;
+    border: none;
+    position: absolute;
+    top: 50%;
+    width: 5%;
+    height: 200px;
+    z-index: 100;
+    &:focus{
+        outline: none;
+    }
+
+    @media only screen and (max-width: 1000px){
+        .toLast, .toNext{
+            font-size: 2rem;
+        }
+    }
 }

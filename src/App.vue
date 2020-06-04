@@ -4,14 +4,18 @@
         <keep-alive>
             <router-view />
         </keep-alive>
-
+        
+        <Notify class="notify-align"/>
+        
         <section class="modal" v-if="showModal" @click.stop.self="close()">
-            <button>
-                <i class="fas fa-arrow-left toLast" v-if="windowWidth>768" @click="toList(-1)"></i>
+            <button class="detectArea toLast"  @click="toList(-1)" :disabled='disabledL' 
+            v-if="windowWidth>768">
+                <i class="fas fa-arrow-left" :class="{disabled: disabledL}"></i>
             </button>
 
-            <button>
-                <i class="fas fa-arrow-right toNext" v-if="windowWidth>768" @click="toList(1)"></i>
+            <button  class="detectArea toNext" @click="toList(1)" :disabled='disabledR' 
+            v-if="windowWidth>768">
+                <i class="fas fa-arrow-right" :class="{disabled: disabledR}"></i>
             </button>
             <PhotoModal class="modal-content"/>
         </section>
@@ -21,16 +25,19 @@
 <script>
 import PhotoModal from '@/components/PhotoModal.vue';
 import Header from '@/components/Header.vue';
+import Notify from '@/components/Notify.vue';
 import {mapGetters} from 'vuex';
 export default {
     components:{
         PhotoModal,
         Header,
+        Notify
     },
 
     data() {
         return {
-            from:''
+            from: '',
+            disabled: 'disabled'
         }
     },
 
@@ -45,19 +52,14 @@ export default {
         },
 
         toList(num){
-            let newOrder, source;
-            let from=this.$route.name;
-            const map = new Map([
-                ['SearchRes', this.pics],
-                ['Author', this.authorList],
-                ['Profile', this.likeList]
-            ]);
-            source=map.get(from);
-            newOrder=source.findIndex(el=>el.id===this.selectPic.id) + num;
-            
-            this.$store.dispatch('selectAction', source[newOrder]);
-            this.$router.push({name: this.$route.name, query:{id: source[newOrder].id}});
+            let newOrder= this.order + num;
+            this.$store.dispatch('selectAction', this.source[newOrder]);
+            this.$router.push({name: this.$route.name, query:{id: this.source[newOrder].id}});
         },
+
+        show(){
+            console.log(this.disabledL);
+        }
     },
 
     computed:{
@@ -79,9 +81,32 @@ export default {
             return '4rem';
         },
 
-        newOder(){
-            
-        }
+        disabledL(){
+            if(this.order===0){
+                return true;
+            }
+            return false;
+        },
+
+        disabledR(){
+            if(this.order===this.source.length-1){
+                return true;
+            }
+            return false;
+        },
+
+        order(){
+            return this.source.findIndex(el=>el.id===this.selectPic.id);
+        },
+
+        source(){
+            const map = new Map([
+                ['SearchRes', this.pics],
+                ['Author', this.authorList],
+                ['Profile', this.likeList]
+            ]);
+            return map.get(this.$route.name);
+        },
     },
 
     created(){
@@ -103,6 +128,13 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+}
+
+.notify-align{
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%,0);
 }
 
 @media only screen and (max-width:$medium){

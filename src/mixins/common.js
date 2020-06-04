@@ -45,6 +45,7 @@ let common={
                 }
                 if(order===-1){
                     this.$store.dispatch('likeListAction', {type:'push', value: pushValue});
+                    this.$store.dispatch('notifyAction');
                     db.collection('users').doc(this.userName).update({
                         likeList: firebase.firestore.FieldValue.arrayUnion(pushValue)
                     });

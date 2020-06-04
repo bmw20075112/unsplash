@@ -2,10 +2,12 @@
 ## 進度
 ```
 CSS: 
+* Profile, SearchRes width limit
 * Header Component MENU RWD
 * PhotoWall PhotoModal 愛心狀態統一
 
 VUE:
+* [修正] 左右切換照片極限值設定
 * [新增] 左右切換照片
 * [修正] 登入時，user資料未設定成功; 登出時未清空資料
 * [新增] 串接資料回Profile Page
@@ -18,10 +20,11 @@ VUE:
 
 ## 問題
 ```
-- [ ] 左右切換照片的極限值未設定
+- [ ] notify背景設定
 - [ ] 左右切換照片的Route問題(上一頁)
 - [ ] Mansonry Layout務必調整成Horizontal
 - [ ] 在Profile，Splice之後的狀態處理
+- [x] 左右切換照片的極限值未設定
 - [x] 作者姓名有兩個以上會跑版
 ```
 

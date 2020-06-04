@@ -113,7 +113,7 @@ export default {
     justify-content: space-between;
     position: fixed;
     top: 0;
-    z-index: 100;
+    z-index: 2;
 }
 
 .brand{
@@ -206,7 +206,7 @@ export default {
         margin-top: $nav-height;
         right: 0;
         width: 100%;
-        z-index: 100;
+        z-index: 2;
         background-color: rgba(0, 0, 0, 0.7);
     }
 

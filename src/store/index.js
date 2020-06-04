@@ -14,6 +14,7 @@ export default new Vuex.Store({
         },
         selectPhoto: {},
         showModal: false,
+        showNotify: false,
         windowWidth: 0
     },
 
@@ -54,6 +55,10 @@ export default new Vuex.Store({
             return state.showModal;
         },
 
+        showNotify(state){
+            return state.showNotify;
+        },
+
         windowWidth(state){
             return state.windowWidth;
         }
@@ -88,6 +93,13 @@ export default new Vuex.Store({
             state.showModal=payload;
         },
 
+        notifyMutate(state){
+            state.showNotify=true;
+            setTimeout(()=>{
+                state.showNotify=false;
+            },2500);
+        },
+
         userMutate(state, payload){
             if(payload.type=='id'){
                 state.user.userID = payload.value;
@@ -111,6 +123,10 @@ export default new Vuex.Store({
 
         likeListAction({commit}, payload){
             commit('likeListMutate', payload);
+        },
+
+        notifyAction({commit}){
+            commit('notifyMutate');
         },
 
         resultAction({commit}, payload){

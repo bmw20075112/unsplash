@@ -115,12 +115,18 @@ export default {
 							userName: this.signup.userID,
                             userID: cred.user.uid,
                             likeList: []
-						})
+                        })
+                        this.$store.dispatch('userAction', {type: 'id', value: this.signup.userID});
+                        this.$store.dispatch('userAction', {type: 'name', value: cred.user.uid});
+                        this.$store.dispatch('likeListAction', []);
 					})
 					.then(()=>{
                         // this.$router.push(decodeURI(this.$route.query.redirect) || '/');
                         this.$router.go(-1);
-                        console.log('ok');
+                        this.signup.userID = '';
+				        this.signup.pwd = '';
+				        this.signup.pwd2 = '';
+				        this.signup.email = '';
 					})
 					.catch(err=>{
 						console.log(err);
@@ -147,9 +153,13 @@ export default {
                             this.$store.dispatch('userAction', {type: 'id', value: snapshot.data().userID});
                             this.$store.dispatch('userAction', {type: 'name', value: snapshot.id});
                             this.$store.dispatch('likeListAction', snapshot.data().likeList);
-                        });
-                    });
-				})
+                        }).t
+                    })
+                    .then(()=>{
+                        this.login.email='';
+				        this.login.pwd='';
+                    })
+                })
 				.catch(err=>{
 					this.loginFeedback=err.message;
 				})

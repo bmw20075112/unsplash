@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <PhotoWall />
+    <div class="searchRes-limit">
+        <PhotoWall/>
     </div>
 </template>
 
@@ -12,3 +12,10 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+.searchRes-limit{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+</style>
