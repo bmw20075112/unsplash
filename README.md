@@ -20,10 +20,10 @@ VUE:
 
 ## 問題
 ```
-- [ ] notify背景設定
 - [ ] 左右切換照片的Route問題(上一頁)
 - [ ] Mansonry Layout務必調整成Horizontal
-- [ ] 在Profile，Splice之後的狀態處理
+- [x] 在Profile，Splice之後的狀態處理
+- [x] notify背景設定
 - [x] 左右切換照片的極限值未設定
 - [x] 作者姓名有兩個以上會跑版
 ```

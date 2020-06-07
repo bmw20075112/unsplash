@@ -21,9 +21,11 @@
             </div>
         </header>
         
-        <figure class="modalPic-container">
+        <Spinner />
+
+        <figure class="modalPic-container fade" v-show="!load">
             <img :class="[orient?landscape:portrait]"
-            :src="pic.urls.regular" :alt="pic.alt_description">
+            :src="pic.urls.regular" :alt="pic.alt_description" @load="loadEnd">
             <figcaption class="reference">
                 Photo by <a target="_blank" rel="noopener noreferrer" :href='userLink'>{{nameLimit}}</a> 
                 on <a target="_blank" rel="noopener noreferrer"
@@ -34,15 +36,23 @@
         <div class="des">
             <p class="description">{{description}}</p>
         </div>
+
+        <Notify class="notify-align"/>
     </section>
 </template>
 
 <script>
 import {blobDecode} from '@/fetch/search.js';
+import Notify from '@/components/Notify.vue';
+import Spinner from '@/components/Spinner.vue';
 import common from '@/mixins/common.js';
 import axios from "axios";
 export default {
     mixins: [common],
+    components:{
+        Notify,
+        Spinner
+    },
     data() {
         return {
             progress: 0,
@@ -71,7 +81,6 @@ export default {
                     link.click();
                 })
             })
-            
         }
     },
 
@@ -161,7 +170,7 @@ export default {
 }
 
 .des{
-    flex-grow: 1;
+    flex-flow: 1;
     & .description{
         text-align: left;
         padding: 0.5rem 1rem 0.5rem 1rem;
@@ -210,6 +219,20 @@ export default {
 .like-mobile{
     cursor: pointer;
     color: $contrast;
+}
+
+.fade{
+    animation: fade 0.3s ease-in;
+}
+
+@keyframes fade{
+    0%{
+        opacity: 0.2;
+    }
+
+    100%{
+        opacity: 1;
+    }
 }
 
 @media only screen and (max-width:$medium){

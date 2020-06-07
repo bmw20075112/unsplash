@@ -10,11 +10,13 @@
                 <i class="fas fa-user profile"></i>
             </div>
             
-            <div class="">
-                <h2>{{$store.getters.userName}}</h2>
-                <button @click="signout()">signout</button>
+            <div class="foo-wrapper">
+                <h2 style="font-size:2rem;">{{$store.getters.userName}}</h2>
+                <button @click="signout()" class="signout">Signout</button>
             </div>
         </div>
+        <h3 style="font-size:1.5rem;">{{$store.getters.userName}}'s collection</h3>
+        <h5 class="like-count">Total Counts: <span style="font-weight: bold">{{$store.getters.likeList.length}}</span></h5>
         <PhotoWall/>
     </section>
 </template>
@@ -45,17 +47,17 @@ export default {
 
         },
 
-        onFileSelected(e){
-            this.selectedFile = e.target.files[0];
-            console.log(e);
-        },
+        // onFileSelected(e){
+        //     this.selectedFile = e.target.files[0];
+        //     console.log(e);
+        // },
 
-        upload(){
-            storage.ref('photo/'+ this.selectedFile.name).put(this.selectedFile)
-            .then(res=>{
-                console.log(res);
-            })
-        }
+        // upload(){
+        //     storage.ref('photo/'+ this.selectedFile.name).put(this.selectedFile)
+        //     .then(res=>{
+        //         console.log(res);
+        //     })
+        // }
     },
 }
 </script>
@@ -66,7 +68,6 @@ export default {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 .profile{
     color: $second;
@@ -79,6 +80,29 @@ export default {
 .profile-wrapper{
     display: flex;
     align-items: center;
+    align-self: center;
     margin: 1rem 0;
+}
+
+.foo-wrapper{
+    margin-left: 0.5rem;
+}
+
+.like-count{
+    color: $contrast;
+}
+
+.signout{
+    font-size: 1rem;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    background-color: $second;
+    color: $background;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    &:hover{
+        box-shadow: 1px 1px 5px black;
+    }
 }
 </style>

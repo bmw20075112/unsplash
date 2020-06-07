@@ -52,6 +52,7 @@ export default {
         },
 
         toList(num){
+            this.$store.dispatch('loadAction', true);
             let newOrder= this.order + num;
             this.$store.dispatch('selectAction', this.source[newOrder]);
             this.$router.push({name: this.$route.name, query:{id: this.source[newOrder].id}});
@@ -131,7 +132,7 @@ export default {
 }
 
 .notify-align{
-    position: absolute;
+    position: fixed;
     left: 50%;
     bottom: 0;
     transform: translate(-50%,0);

@@ -1,10 +1,11 @@
 <template>
-    <div class="home" :style='{backgroundImage:bgPath}'></div>
+    <div>
+        <div class="home" :style='{backgroundImage:bgPath}'></div>
+    </div>
 </template>
 
 <script>
 import {db} from '../fetch/firebase';
-
 export default {
     data() {
         return {
@@ -12,21 +13,21 @@ export default {
         }
     },
     methods: {
-        random(){
-            return getRandom()
-            .then(data=>{
-                console.log(data);
-            })
-            .catch(error=>{
-                console.log(error);
-            })
-        }
+        // random(){
+        //     return getRandom()
+        //     .then(data=>{
+        //         console.log(data);
+        //     })
+        //     .catch(error=>{
+        //         console.log(error);
+        //     })
+        // }
     },
 
     computed: {
         bgPath(){
             return 'url('+ require("@/assets/cover.jpg")+')';
-        }
+        },
     },
 }
 </script>

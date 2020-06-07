@@ -111,6 +111,7 @@ export default {
             }else{
                 this.$store.dispatch('showModalAction', false);
                 document.body.classList.remove('freeze');
+                this.$store.dispatch('loadAction', true);
             }
         }
     },
@@ -118,6 +119,7 @@ export default {
 </script>
 
 <style lang='scss'>
+@import '../styles/spinner.scss';
 .pics-align{
     column-gap: 1rem;
     column-width: 300px;

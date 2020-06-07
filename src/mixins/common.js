@@ -61,6 +61,10 @@ let common={
             
         },
 
+        loadEnd(){
+            this.$store.dispatch('loadAction', false);
+        },
+
         toAuthor(username){
             return getAuthorList(username,{
                 per_page: 20
@@ -76,6 +80,7 @@ let common={
     computed: {
         ...mapGetters([
             'likeList',
+            'load',
             'showModal',
             'userID',
             'userName',

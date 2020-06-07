@@ -7,6 +7,7 @@ export default new Vuex.Store({
     state: {
         authorList: [],
         likeList: [],
+        load: true,
         pics: [],
         user: {
             userID:'',
@@ -25,6 +26,10 @@ export default new Vuex.Store({
 
         likeList(state){
             return state.likeList;
+        },
+
+        load(state){
+            return state.load;
         },
 
         orientLandscape(state){
@@ -81,6 +86,10 @@ export default new Vuex.Store({
             }
         },
 
+        loadMutate(state, payload){
+            state.load=payload;
+        },
+
         resultMutate(state, payload){
             state.pics=payload;
         },
@@ -123,6 +132,10 @@ export default new Vuex.Store({
 
         likeListAction({commit}, payload){
             commit('likeListMutate', payload);
+        },
+
+        loadAction({commit}, payload){
+            commit('loadMutate', payload);
         },
 
         notifyAction({commit}){

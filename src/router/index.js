@@ -52,12 +52,12 @@ const router = new VueRouter({
     routes,
     scrollBehavior(to, from, savedPosition){
         if(savedPosition){
-            return savedPosition;
-        }else if(to.query.auth===true){
-            return savedPosition;
-        }else{
-            return {x:0, y:0};
-        }
+            return savedPosition;}
+        // }else if(to.query.auth===true){
+        //     return savedPosition;
+        // }else{
+        //     return {x:0, y:0};
+        // }
     }
 })
 

@@ -8,11 +8,11 @@
     &-content{
         position: absolute;
         left: 50%;
-        top: 100%;
-        transform: translate(-50%,-100%);
+        bottom: 0;
+        transform: translate(-50%, 0);
         overflow: auto;
         @media only screen and (max-width: $medium){
-            top: 50%;
+            bottom: 50%;
             transform: translate(-50%,-50%);
         }
     }

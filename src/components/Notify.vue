@@ -2,8 +2,7 @@
     <div>
         <transition name="notify">
             <div v-show="showNotify" class="notify">
-                <p class="note">You have added this photo to your collection</p>
-                <button @click='goProfile'>Profile</button>
+                <p class="note">Photo has been added to collection</p>
             </div>
         </transition>
     </div>
@@ -11,12 +10,6 @@
 
 <script>
 export default {
-    methods: {
-        goProfile(){
-            this.$router.push({name: 'Profile'});
-        }
-    },
-
     computed:{
         showNotify(){
             return this.$store.getters.showNotify;
@@ -28,9 +21,17 @@ export default {
 <style lang='scss'>
 .notify{
     width: 100%;
-    height: 50px;
-    background-color: $second;
-    color: $background;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.5rem;
+    background-color: $first;
+    border: 2px solid $second;
+    box-shadow: 1px 1px 5px black;
+    color: $third;
+    @media only screen and(max-width: $medium){
+        font-size: 1rem;
+        padding: 0.25rem;
+    }
 }
 .note{
     display: inline-block;
