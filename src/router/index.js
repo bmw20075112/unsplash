@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import firebase from 'firebase';
-import store from '@/store/index.js';
+import { auth } from '../fetch/firebase';
 
 Vue.use(VueRouter)
 
@@ -52,27 +51,22 @@ const router = new VueRouter({
     routes,
     scrollBehavior(to, from, savedPosition){
         if(savedPosition){
-            return savedPosition;}
-        // }else if(to.query.auth===true){
-        //     return savedPosition;
-        // }else{
-        //     return {x:0, y:0};
-        // }
+            return savedPosition;
+        }
     }
 })
 
 router.beforeEach((to,from,next)=>{
 	//check to see if route requires auth
 	if(to.matched.some(rec=>rec.meta.requiresAuth)){
-		firebase.auth().onAuthStateChanged(user=>{
-            if(user){
-                next();
-            }else{
-                // no user signed in, reject
-                next({name:'Identity'})
-            }
-        });
-		
+		auth.onAuthStateChanged(user=>{
+      if(user){
+        next();
+      }else{
+        // no user signed in, reject
+        next({name:'Identity'})
+      }
+    });
 	}else{
 		next();
 	}

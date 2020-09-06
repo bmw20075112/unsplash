@@ -1,6 +1,6 @@
 import {mapGetters} from 'vuex';
 import {db} from '../fetch/firebase';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import {getAuthorList} from '@/fetch/search.js'
 let common={
     data() {
@@ -70,7 +70,6 @@ let common={
                 per_page: 20
             })
             .then(data=>{
-                console.log(data);
                 this.$store.dispatch('authorListAction', data.data);
                 this.$router.push({name:'Author', query:{user: username}});
             })

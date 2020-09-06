@@ -49,7 +49,6 @@ export default {
                 return searchPhotos(this.term)
                 .then(data=>{
                     const pics=data.data.results;
-                    console.log(data);
                     this.$store.dispatch('resultAction',pics);
                     if(this.$route.name!=='SearchRes'){
                         this.$router.push({name:'SearchRes'});
@@ -62,14 +61,17 @@ export default {
                     this.isTrue=false;
                 })
                 .catch(error=>{
-                    console.log(error);
+                    
                 })
             }
         },
 
         close(){
             if(this.$route.name !== 'Profile'){
-                this.$router.push({name:'Profile'});
+                this.$router.push({name:'Profile'})
+                .catch(err=>{
+                  
+                })
             }
             this.isTrue=false;
         }

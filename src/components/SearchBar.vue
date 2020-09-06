@@ -21,7 +21,6 @@ export default {
                 return searchPhotos(this.term)
                 .then(data=>{
                     const pics=data.data.results;
-                    console.log(data);
                     this.$store.dispatch('resultAction',pics);
                     if(this.$route.name!=='SearchRes'){
                         this.$router.push({name:'SearchRes'});
@@ -29,7 +28,7 @@ export default {
                     this.term='';
                 })
                 .catch(error=>{
-                    console.log(error);
+                    // console.log(error);
                 })
             }
         }

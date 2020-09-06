@@ -91,11 +91,6 @@ export default {
                return '';
             }
             return des;
-            // let res= des.split(' ');
-            // if(res.length>30){
-            //     return res.slice(0,29).join(' ')+'......';
-            // }
-            // return res.join(' ');
         },
 
         downloadLink(){

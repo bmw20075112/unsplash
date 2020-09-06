@@ -25,8 +25,7 @@
 </template>
 
 <script>
-import firebase from 'firebase';
-import {db} from '../fetch/firebase';
+import {auth,db} from '../fetch/firebase';
 import common from '@/mixins/common.js'
 import {getAuthorList} from '@/fetch/search.js';
 import {mapGetters} from 'vuex'
@@ -89,7 +88,7 @@ export default {
     },
 
     created(){
-        firebase.auth().onAuthStateChanged(user=>{
+        auth.onAuthStateChanged(user=>{
             if(user){
                 db.collection('users').where("userID",'==', user.uid).get()
                 .then(snapshots=>{

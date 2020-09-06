@@ -55,11 +55,7 @@ export default {
             this.$store.dispatch('loadAction', true);
             let newOrder= this.order + num;
             this.$store.dispatch('selectAction', this.source[newOrder]);
-            this.$router.push({name: this.$route.name, query:{id: this.source[newOrder].id}});
-        },
-
-        show(){
-            console.log(this.disabledL);
+            this.$router.replace({name: this.$route.name, query:{id: this.source[newOrder].id}});
         }
     },
 

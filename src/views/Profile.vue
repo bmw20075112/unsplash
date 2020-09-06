@@ -22,9 +22,8 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import {auth} from '../fetch/firebase.js'
 import PhotoWall from '@/components/PhotoWall.vue';
-import {storage} from '../fetch/firebase.js';
 export default {
     components:{
         PhotoWall
@@ -38,26 +37,13 @@ export default {
 
     methods: {
         signout(){
-            firebase.auth().signOut().then(()=>{
+            auth.signOut().then(()=>{
                 this.$store.dispatch('userAction', {type: 'clear'});
                 this.$store.dispatch('likeListAction', {type: 'clear'});
             }).then(()=>{
                 this.$router.push({name: 'Home'});
             })
-
         },
-
-        // onFileSelected(e){
-        //     this.selectedFile = e.target.files[0];
-        //     console.log(e);
-        // },
-
-        // upload(){
-        //     storage.ref('photo/'+ this.selectedFile.name).put(this.selectedFile)
-        //     .then(res=>{
-        //         console.log(res);
-        //     })
-        // }
     },
 }
 </script>

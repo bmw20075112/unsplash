@@ -80,8 +80,7 @@
 </template>
 
 <script>
-import {db} from '../fetch/firebase.js'
-import firebase from 'firebase';
+import {auth,db} from '../fetch/firebase.js'
 export default {
 	data() {
 		return {
@@ -109,7 +108,7 @@ export default {
 	methods: {
 		signupSend(){
 			if(this.userIDCheck && this.pwdFeedback && this.signup.email){
-				firebase.auth().createUserWithEmailAndPassword(this.signup.email,this.signup.pwd2)
+				auth.createUserWithEmailAndPassword(this.signup.email,this.signup.pwd2)
 					.then(cred=>{
 						this.userIDChange.set({
 							userName: this.signup.userID,
@@ -129,7 +128,7 @@ export default {
 				        this.signup.email = '';
 					})
 					.catch(err=>{
-						console.log(err);
+						// console.log(err);
 						this.firebaseFeedback=err.message;
 					});
 			}else{
@@ -139,13 +138,8 @@ export default {
         
 		loginSend(){
 			if(this.login.email && this.login.pwd){
-				firebase.auth().signInWithEmailAndPassword(this.login.email, this.login.pwd)
+				auth.signInWithEmailAndPassword(this.login.email, this.login.pwd)
 				.then(cred=>{
-                    // if(this.$route.query.redirect){
-                    //     this.$router.push(decodeURI(this.$route.query.redirect));
-                    // }else{
-                    //     this.$router.push('/');
-                    // }
                     this.$router.go(-1);
                     db.collection('users').where('userID', '==', cred.user.uid)
                     .get().then(snapshots=>{
