@@ -20,6 +20,7 @@ VUE:
 
 ## 問題
 ```
+Common JS 有問題，按Profile會跳Error
 - [ ] 左右切換照片的Route問題(上一頁)
 - [ ] Mansonry Layout務必調整成Horizontal
 - [x] 在Profile，Splice之後的狀態處理

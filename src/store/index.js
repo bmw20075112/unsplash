@@ -1,167 +1,115 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { db } from '../fetch/firebase';
+import Vue from 'vue';
+import Vuex from 'vuex';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state: {
-        authorList: [],
-        likeList: [],
-        load: true,
-        pics: [],
-        user: {
-            userID:'',
-            userName:''
-        },
-        selectPhoto: {},
-        showModal: false,
-        showNotify: false,
-        windowWidth: 0
+  state: {
+    authorList: [],
+    idFeedback: null,
+    likeList: [],
+    load: true,
+    pics: [],
+    user: {
+      userID: '',
+      userName: ''
     },
+    userIDCheck: false,
+    selectPhoto: {},
+    showModal: false,
+    showNotify: false,
+    windowWidth: 0
+  },
 
-    getters:{
-        authorList(state){
-            return state.authorList;
-        },
-
-        likeList(state){
-            return state.likeList;
-        },
-
-        load(state){
-            return state.load;
-        },
-
-        orientLandscape(state){
-            if(state.selectPhoto.width>state.selectPhoto.height){
-                return true;
-            }else{
-                return false;
-            }
-        },
-
-        pics(state){
-            return state.pics;
-        },
-
-        userID(state){
-            return state.user.userID;
-        },
-
-        userName(state){
-            return state.user.userName;
-        },
-
-        selectPic(state){
-            return state.selectPhoto;
-        },
-
-        showModal(state){
-            return state.showModal;
-        },
-
-        showNotify(state){
-            return state.showNotify;
-        },
-
-        windowWidth(state){
-            return state.windowWidth;
-        }
-    },
-
-    mutations: {
-        authorListMutate(state, payload){
-            state.authorList=payload;
-        },
-
-        likeListMutate(state, payload){
-            if(payload.type=='push'){
-                state.likeList.push(payload.value);
-            }else if(payload.type=='splice'){
-                state.likeList.splice(payload.value, 1);
-            }else if(payload.type=='clear'){
-                state.likeList=[];
-            }else{
-                state.likeList=payload;
-            }
-        },
-
-        loadMutate(state, payload){
-            state.load=payload;
-        },
-
-        resultMutate(state, payload){
-            state.pics=payload;
-        },
-
-        selectMutate(state, payload){
-            state.selectPhoto=payload;
-        },
-
-        showModalMutate(state, payload){
-            state.showModal=payload;
-        },
-
-        notifyMutate(state){
-            state.showNotify=true;
-            setTimeout(()=>{
-                state.showNotify=false;
-            },2500);
-        },
-
-        userMutate(state, payload){
-            if(payload.type=='id'){
-                state.user.userID = payload.value;
-            }else if(payload.type=='name'){
-                state.user.userName = payload.value;
-            }else if(payload.type=='clear'){
-                state.user.userID='';
-                state.user.userName='';
-            }
-        },
-
-        widthMutate(state, payload){
-            state.windowWidth=payload;
-        }
-    },
-
-    actions: {
-        authorListAction({commit}, payload){
-            commit('authorListMutate', payload);
-        },
-
-        likeListAction({commit}, payload){
-            commit('likeListMutate', payload);
-        },
-
-        loadAction({commit}, payload){
-            commit('loadMutate', payload);
-        },
-
-        notifyAction({commit}){
-            commit('notifyMutate');
-        },
-
-        resultAction({commit}, payload){
-            commit('resultMutate', payload);
-        },
-
-        selectAction({commit}, payload){
-            commit('selectMutate', payload);
-        },
-
-        showModalAction({commit}, payload){
-            commit('showModalMutate', payload);
-        },
-
-        userAction({commit}, payload){
-            commit('userMutate', payload);
-        },
-
-        widthAction({commit}, payload){
-            commit('widthMutate', payload);
-        }
-    },
-    modules: {
+  getters: {
+    orientLandscape (state) {
+      if (state.selectPhoto.width > state.selectPhoto.height) {
+        return true;
+      } else {
+        return false;
+      }
     }
+  },
+
+  mutations: {
+    authorListMutate (state, payload) {
+      state.authorList = payload;
+    },
+
+    idFeedbackMutate (state, payload) {
+      state.idFeedback = payload;
+    },
+
+    likeListMutate (state, payload) {
+      if (payload.type === 'push') {
+        state.likeList.push(payload.value);
+      } else if (payload.type === 'splice') {
+        state.likeList.splice(payload.value, 1);
+      } else if (payload.type === 'clear') {
+        state.likeList = [];
+      } else {
+        state.likeList = payload;
+      }
+    },
+
+    loadMutate (state, payload) {
+      state.load = payload;
+    },
+
+    resultMutate (state, payload) {
+      state.pics = payload;
+    },
+
+    selectMutate (state, payload) {
+      state.selectPhoto = payload;
+    },
+
+    showModalMutate (state, payload) {
+      state.showModal = payload;
+    },
+
+    notifyMutate (state) {
+      state.showNotify = true;
+      setTimeout(() => {
+        state.showNotify = false;
+      }, 2500);
+    },
+
+    userIDCheckMutate (state, payload) {
+      state.userIDCheck = payload;
+    },
+
+    userMutate (state, payload) {
+      if (payload.type === 'id') {
+        state.user.userID = payload.value;
+      } else if (payload.type === 'name') {
+        state.user.userName = payload.value;
+      } else if (payload.type === 'clear') {
+        state.user.userID = '';
+        state.user.userName = '';
+      }
+    },
+
+    widthMutate (state, payload) {
+      state.windowWidth = payload;
+    }
+  },
+
+  actions: {
+    checkUniqueName ({ commit }, name) {
+      db.collection('users').doc(name).get()
+        .then(doc => {
+          if (doc.exists) {
+            commit('idFeedbackMutate', 'This account is already created');
+            commit('userIDCheckMutate', false);
+          } else {
+            commit('idFeedbackMutate', null);
+            commit('userIDCheckMutate', true);
+          }
+        })
+    }
+  },
+  modules: {
+  }
 })

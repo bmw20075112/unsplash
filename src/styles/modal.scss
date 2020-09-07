@@ -1,3 +1,28 @@
+.detectArea{
+  background-color: unset;
+  border: none;
+  position: absolute;
+  top: 50%;
+  width: 5%;
+  height: 200px;
+  z-index: 100;
+  &:focus{
+      outline: none;
+  }
+
+  @media only screen and (max-width: 1000px){
+      .toLast, .toNext{
+          font-size: 2rem;
+      }
+  }
+}
+
+.disabled{
+  pointer-events: none;
+  cursor: default;
+  color: rgba(243, 243, 243, 0);
+}
+
 .modal{
     width: 100%;
     height: 100%;
@@ -33,29 +58,4 @@
 
 .toNext{
     right: 0;
-}
-
-.disabled{
-    pointer-events: none;
-    cursor: default;
-    color: rgba(243, 243, 243, 0);
-}
-
-.detectArea{
-    background-color: unset;
-    border: none;
-    position: absolute;
-    top: 50%;
-    width: 5%;
-    height: 200px;
-    z-index: 100;
-    &:focus{
-        outline: none;
-    }
-
-    @media only screen and (max-width: 1000px){
-        .toLast, .toNext{
-            font-size: 2rem;
-        }
-    }
 }
