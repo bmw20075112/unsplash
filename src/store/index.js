@@ -8,14 +8,13 @@ export default new Vuex.Store({
   state: {
     authorList: [],
     idFeedback: null,
+    isModeLogin: true,
     likeList: [],
     load: true,
     pics: [],
-    user: {
-      userID: '',
-      userName: ''
-    },
+    userID: '',
     userIDCheck: false,
+    userName: '',
     selectPhoto: {},
     showModal: false,
     showNotify: false,
@@ -39,6 +38,10 @@ export default new Vuex.Store({
 
     idFeedbackMutate (state, payload) {
       state.idFeedback = payload;
+    },
+
+    isModeLoginMutate (state, payload) {
+      state.isModeLogin = payload;
     },
 
     likeListMutate (state, payload) {
@@ -82,12 +85,12 @@ export default new Vuex.Store({
 
     userMutate (state, payload) {
       if (payload.type === 'id') {
-        state.user.userID = payload.value;
+        state.userID = payload.value;
       } else if (payload.type === 'name') {
-        state.user.userName = payload.value;
+        state.userName = payload.value;
       } else if (payload.type === 'clear') {
-        state.user.userID = '';
-        state.user.userName = '';
+        state.userID = '';
+        state.userName = '';
       }
     },
 

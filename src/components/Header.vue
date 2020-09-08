@@ -65,8 +65,8 @@ export default {
     close () {
       if (this.$route.name !== 'Profile') {
         this.$router.push({ name: 'Profile' })
-          .catch(() => {
-            return null;
+          .catch(err => {
+            return err;
           })
       }
 

@@ -1,15 +1,15 @@
 module.exports = {
   root: true,
 
-  env: {
-    browser: true,
-    node: true
-  },
-
   extends: [
     'plugin:vue/strongly-recommended',
-    'standard'
+    'standard',
+    '@vue/standard'
   ],
+
+  env: {
+    browser: true
+  },
 
   parserOptions: {
     parser: 'babel-eslint',
@@ -26,16 +26,10 @@ module.exports = {
   rules: {
     'generator-star-spacing': 'off',
     'arrow-parens': 'off',
-    semi: 'off',
+    'semi': 'off',
     'prefer-const': 'off',
     'vue/html-quotes': 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
-  },
-
-  extends: [
-    'plugin:vue/strongly-recommended',
-    'standard',
-    'plugin:vue/essential',
-    '@vue/standard'
-  ]
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+  }
 }

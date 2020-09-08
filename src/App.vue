@@ -65,7 +65,10 @@ export default {
     },
 
     close () {
-      this.$router.push({ name: this.$route.name, query: null });
+      this.$router.push({ name: this.$route.name, query: null })
+        .catch(err => {
+          return err;
+        })
       this.$store.commit('showModalMutate', false);
     },
 
@@ -97,28 +100,43 @@ export default {
     },
 
     disabledL () {
-      if (this.order === 0) {
+      if (this.$route.name === 'Identity') {
         return true;
+      } else {
+        if (this.order === 0) {
+          return true;
+        } else {
+          return false;
+        }
       }
-      return false;
     },
 
     disabledR () {
-      if (this.order === this.source.length - 1) {
+      if (this.$route.name === 'Identity') {
         return true;
+      } else {
+        if (this.order === this.source.length - 1) {
+          return true;
+        } else {
+          return false;
+        }
       }
-      return false;
     },
 
     order () {
-      return this.source.findIndex(el => el.id === this.selectPhoto.id);
+      if (this.$route.name === 'Identity') {
+        return null;
+      } else {
+        return this.source.findIndex(el => el.id === this.selectPhoto.id);
+      }
     },
 
     source () {
       const map = new Map([
         ['SearchRes', this.pics],
         ['Author', this.authorList],
-        ['Profile', this.likeList]
+        ['Profile', this.likeList],
+        ['Identity', null]
       ]);
       return map.get(this.$route.name);
     }

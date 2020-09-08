@@ -20,9 +20,7 @@ VUE:
 
 ## 問題
 ```
-Common JS 有問題，按Profile會跳Error
-- [ ] 左右切換照片的Route問題(上一頁)
-- [ ] Mansonry Layout務必調整成Horizontal
+- [x] 左右切換照片的Route問題(上一頁)
 - [x] 在Profile，Splice之後的狀態處理
 - [x] notify背景設定
 - [x] 左右切換照片的極限值未設定
@@ -36,7 +34,4 @@ Common JS 有問題，按Profile會跳Error
 - [x] Download progress
 - [x] 建立Profile頁面已顯示喜歡的照片
 - [x] 左右切換照片
-- [] 下滑偵測以無限載入API
-- [] Modal下滑載入其他類似照片
-- [] pagination
 ```

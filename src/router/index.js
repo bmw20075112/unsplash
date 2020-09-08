@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from '../store/index.js';
 import { auth } from '../fetch/firebase';
 
 Vue.use(VueRouter)
@@ -64,6 +65,7 @@ router.beforeEach((to, from, next) => {
         next();
       } else {
         // no user signed in, reject
+        store.commit('isModeLoginMutate', true);
         next({ name: 'Identity' })
       }
     });

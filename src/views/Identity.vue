@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <section class=" identity-wrapper">
       <header class="identity-header">
         <!-- 按鈕切換 -->
@@ -119,7 +119,6 @@
 
           <!-- 密碼是否一致? -->
           <span
-            class=""
             v-if="pwdCheck"
           >{{ pwdCheck }}</span>
           <!-- Firebase 回傳的問題 -->
@@ -160,7 +159,6 @@ export default {
     return {
       die: 'btnDie', // Button not in use
       firebaseFeedback: null, // Signup error message from firebase
-      isModeLogin: true, // Identity Mode
       login: {
         email: '',
         pwd: ''
@@ -176,6 +174,7 @@ export default {
       }
     }
   },
+
   methods: {
     pwdRes (val) {
       if (val) {
@@ -189,7 +188,7 @@ export default {
       if (this.userIDCheck && this.pwdCheckPass && this.signup.email) {
         auth.createUserWithEmailAndPassword(this.signup.email, this.signup.pwd2)
           .then(cred => {
-            this.userIDChange.set({
+            db.collection('users').doc(this.userIDChange).set({
               userName: this.signup.userID,
               userID: cred.user.uid,
               likeList: []
@@ -197,16 +196,16 @@ export default {
             this.$store.commit('userMutate', { type: 'id', value: this.signup.userID });
             this.$store.commit('userMutate', { type: 'name', value: cred.user.uid });
             this.$store.commit('likeListMutate', []);
+            this.$router.go(-1);
           })
           .then(() => {
-            this.$router.go(-1);
             this.signup.userID = '';
             this.signup.pwd = '';
             this.signup.pwd2 = '';
             this.signup.email = '';
+            this.$store.commit('userIDCheckMutate', false);
           })
           .catch(err => {
-            // console.log(err);
             this.firebaseFeedback = err.message;
           });
       } else {
@@ -240,18 +239,27 @@ export default {
       }
     }
   },
+
   computed: {
     ...mapState([
       'idFeedback',
       'userIDCheck'
     ]),
 
+    isModeLogin: { // Identity Mode
+      get () {
+        return this.$store.state.isModeLogin;
+      },
+
+      set (val) {
+        this.$store.commit('isModeLoginMutate', val);
+      }
+    },
+
     userIDChange () {
       if (this.signup.userID) {
         let convert = this.signup.userID.replace(/[$*_+~.()'"!\-:@^#{} ]/g, '-');
-        let name = convert.toLowerCase();
-        this.$store.dispatch('checkUniqueName', name);
-        return name;
+        return convert.toLowerCase();
       } else {
         return null;
       }
@@ -268,6 +276,14 @@ export default {
         return null;
       } else {
         return null;
+      }
+    }
+  },
+
+  watch: {
+    userIDChange (val) {
+      if (val) {
+        this.$store.dispatch('checkUniqueName', val);
       }
     }
   }
